@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" ?>
+<schema>
+  <table returnObjectType="multiple" name="NgTsUser">
+    <field name="UserId" type="int" primary_key="yes" />
+    <field name="UserName" type="varchar(50)" />
+    <field name="UserCode" type="varchar(50)" />
+    <field name="FirstName" type="varchar(50)" />
+    <field name="LastName" type="varchar(50)" />
+    <field name="Password" type="varchar(50)" />
+  </table>
+  <table returnObjectType="multiple" name="Product">
+    <field name="ProductId" type="int" primary_key="yes" />
+    <field name="ProductName" type="varchar(50)" />
+    <field name="ProductDesc" type="varchar(50)" />
+    <field name="Price" type="decimal (12,2)" />
+  </table>
+
+</schema>

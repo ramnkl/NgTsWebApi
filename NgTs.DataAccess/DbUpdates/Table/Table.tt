@@ -1,0 +1,22 @@
+﻿<#@ template debug="true" hostspecific="true" language="C#" #>
+<#@ include file="..\..\templates\CRUD.ttinclude" #><#@ output extension=".bat" #>
+
+<#
+var manager = TemplateFileManager.Create(this);
+var model=FromFile(@"..\..\model\models.xml");
+  
+foreach(var table in model["table"]) 
+{	
+	WriteLine(string.Format(@"sqlcmd -S %SName% -U %UName% -P %Pwd% -d %DbName% -I -i %Opath%\Table\{0}.table.sql -o %Opath%\Error\Tables\{0}.table.sql.err", GetLetterCase( table.name, false)));
+}	
+foreach(var c in model["table"]) 
+	{ //get all classes	
+  manager.StartNewFile(GetLetterCase( c.name, false) +".table.sql");
+#>
+ 
+--This auto genrated code please donot alter  <#=  DateTime.Now #>
+<#
+	CreateTable(c);
+	}
+	manager.Process();
+#>

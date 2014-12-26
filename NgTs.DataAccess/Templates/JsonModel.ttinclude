@@ -1,0 +1,43 @@
+﻿<#@ IntelliSenseLanguage processor="tangibleT4Editor" language="C#" #>
+
+<#@ include file="common.ttinclude"  #>
+
+<#+ 
+//Create an elastic object
+
+
+
+//Write a class
+private void CreateSSClass(dynamic ns)
+{
+foreach (string include in ns.ssUsing.Split(',')  )
+{
+WriteLine ("using " + include+ ";");
+}
+
+WriteLine("");
+WriteLine("namespace " + ns.ssName); 
+WriteLine("{");
+PushIndent("\t");
+foreach (dynamic c in  ns["class"])
+{
+
+WriteLine  ("public class " + c.name);
+WriteLine ("{");
+PushIndent("\t");
+foreach (dynamic field in  c["field"])
+{
+WriteLine ("public " + field.type + " "+   field.name  + ";");
+}
+
+PopIndent();
+WriteLine ("}");
+}
+PopIndent();
+WriteLine ("}"); //class end
+
+#>
+
+		<#+
+	}	
+#>

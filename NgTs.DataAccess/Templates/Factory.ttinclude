@@ -1,0 +1,739 @@
+﻿<#@ IntelliSenseLanguage processor="tangibleT4Editor" language="C#" #>
+<#@ include file="Common.ttinclude" #>
+
+
+
+
+<#+ 
+
+private void InsertFactory(dynamic table)
+{ 
+WriteLine( "#region Insert factory");
+//Create class  
+PushIndent("\t");	
+
+dynamic  primaryKey= GetPrimaryField(table);
+string primaryKeyName = "No primary found";
+if  (primaryKey !=  null)
+primaryKeyName = (string) primaryKey.name;
+WriteLine ( string.Format("internal class {0}InsertFactory : IDbToBusinessEntityNameMapper, IInsertFactory<{0}>", GetLetterCase( table.name, false)));
+PushIndent("\t");
+WriteLine ("{");
+WriteLine ( string.Format("public {0}InsertFactory()", GetLetterCase( table.name, false)));
+PushIndent("\t"); 
+	WriteLine("{");
+	WriteLine("}");
+	PopIndent();
+
+string  className  = GetLetterCase(table.name, true);
+WriteLine (string.Format("public DbCommand ConstructInsertCommand(Database db, {0} {1})", GetLetterCase(table.name, false),className ));
+PushIndent("\t"); 
+	WriteLine("{");
+	WriteLine(string.Format( "DbCommand command = db.GetStoredProcCommand( \"{0}Insert\");", GetLetterCase( table.name,false)));
+foreach  (dynamic field in table["field"])
+{
+WriteLine( string.Format( "db.AddInParameter(command,  \"{0}\",{1}, {2}.{3} );" , field.name, GetDbDataType(field), className,  GetLetterCase( field.name, false)));
+}
+	WriteLine("return command;");
+	WriteLine("}");
+	PopIndent();
+WriteLine(" //Write generate/fetch new Id while insert a record ");
+WriteLine(string.Format( "public void SetNewID(Database db, DbCommand command, {0} {1})", 
+	GetLetterCase(table.name, false) , GetLetterCase(table.name, true)));
+PushIndent("\t"); 
+	WriteLine("{");
+			WriteLine(string.Format( "{0} {1}1 = ({0})(db.GetParameterValue(command,  \"{1}\"));",
+	GetCSharpClassType(primaryKey), GetLetterCase(primaryKey.name,true)));
+			WriteLine( string.Format("{0}.{1}= {2}1;", 
+			GetLetterCase(table.name, true), GetLetterCase(primaryKey.name,false), GetLetterCase(primaryKey.name, true)));
+	WriteLine("}");
+	PopIndent();
+WriteLine ("public string MapDbParameterToBusinessEntityProperty(string dbParameter)");
+PushIndent("\t"); 
+	WriteLine("{");
+
+	WriteLine ("switch (dbParameter)");
+	PushIndent("\t"); 
+	WriteLine("{");
+foreach  (dynamic field in table["field"])
+{
+
+	WriteLine(string.Format( "case \"{0}\" :", field.name	));
+	WriteLine( string.Format( "return \"{0}\";", field.name));
+}
+	WriteLine("default : ");
+	WriteLine("return string.Format(System.Globalization.CultureInfo.CurrentCulture, \"Invalid Parameter Name\");");
+	WriteLine("}");
+	PopIndent();
+WriteLine("}");
+	PopIndent();
+WriteLine("}");
+PopIndent();
+WriteLine( "#endregion");
+PopIndent();
+
+}
+
+
+
+private void UpdateFactory(dynamic table)
+{ 
+WriteLine( "#region update factory");
+//Create class  
+PushIndent("\t");	
+
+dynamic  primaryKey= GetPrimaryField(table);
+string primaryKeyName = "No primary found";
+if  (primaryKey !=  null)
+primaryKeyName = (string) primaryKey.name;
+WriteLine ( string.Format("internal class {0}UpdateFactory : IDbToBusinessEntityNameMapper, IUpdateFactory<{0}>", GetLetterCase( table.name, false)));
+PushIndent("\t");
+WriteLine ("{");
+WriteLine ( string.Format("public {0}UpdateFactory()", GetLetterCase( table.name, false)));
+PushIndent("\t"); 
+	WriteLine("{");
+	WriteLine("}");
+	PopIndent();
+
+string  className  = GetLetterCase(table.name, true);
+WriteLine (string.Format("public DbCommand ConstructUpdateCommand(Database db, {0} {1})", GetLetterCase(table.name, false),className ));
+PushIndent("\t"); 
+	WriteLine("{");
+	WriteLine(string.Format( "DbCommand command = db.GetStoredProcCommand( \"{0}Update\");", GetLetterCase( table.name,false)));
+foreach  (dynamic field in table["field"])
+{
+WriteLine( string.Format( "db.AddInParameter(command,  \"{0}\",{1}, {2}.{3} );" , field.name, GetDbDataType(field), className,  GetLetterCase( field.name, false)));
+}
+	WriteLine("return command;");
+	WriteLine("}");
+	PopIndent();
+WriteLine ("public string MapDbParameterToBusinessEntityProperty(string dbParameter)");
+PushIndent("\t"); 
+	WriteLine("{");
+
+	WriteLine ("switch (dbParameter)");
+	PushIndent("\t"); 
+	WriteLine("{");
+foreach  (dynamic field in table["field"])
+{
+
+	WriteLine(string.Format( "case \"{0}\" :", field.name	));
+	WriteLine( string.Format( "return \"{0}\";", field.name));
+}
+	WriteLine("default : ");
+	WriteLine("return string.Format(System.Globalization.CultureInfo.CurrentCulture, \"Invalid Parameter Name\");");
+	WriteLine("}");
+	PopIndent();
+WriteLine("}");
+	PopIndent();
+WriteLine("}");
+PopIndent();
+WriteLine( "#endregion");
+PopIndent();
+
+}
+
+
+
+private void DeleteFactory(dynamic table)
+{ 
+WriteLine( "#region delete factory");
+//Create class  
+PushIndent("\t");	
+
+dynamic  primaryKey= GetPrimaryField(table);
+string primaryKeyName = "No primary found";
+if  (primaryKey !=  null)
+primaryKeyName = (string) primaryKey.name;
+WriteLine (" internal class ");
+Write (GetLetterCase( table.name, false));
+Write ("DeleteFactory : IDeleteFactory<");
+Write (GetCSharpClassType(primaryKey));
+Write (">");
+PushIndent("\t");
+WriteLine ("{");
+WriteLine ( string.Format("public {0}DeleteFactory()", GetLetterCase( table.name, false)));
+PushIndent("\t"); 
+	WriteLine("{");
+	WriteLine("}");
+	PopIndent();
+
+WriteLine (string.Format("public DbCommand ConstructDeleteCommand(Database db, {0} {1})", GetCSharpClassType(primaryKey),  primaryKeyName));
+PushIndent("\t"); 
+	WriteLine("{");
+	WriteLine(string.Format( "DbCommand command = db.GetStoredProcCommand( \"{0}Delete\");", GetLetterCase( table.name,false)));
+	WriteLine( string.Format( "db.AddInParameter(command,  \"{0}\",{1}, {2} );" , primaryKeyName, GetDbDataType(primaryKey), primaryKeyName));
+	WriteLine("return command;");
+	WriteLine("}");
+	PopIndent();
+
+WriteLine ("public string MapDbParameterToBusinessEntityProperty(string dbParameter)");
+PushIndent("\t"); 
+	WriteLine("{");
+	WriteLine ("switch (dbParameter)");
+	PushIndent("\t"); 
+	WriteLine("{");
+	WriteLine(string.Format( "case \"{0}\" :", primaryKeyName	));
+	WriteLine( string.Format( "return \"{0}\";", primaryKeyName	));
+	WriteLine("default : ");
+	WriteLine("return string.Format(System.Globalization.CultureInfo.CurrentCulture, \"InvalidParameterName\");");
+	WriteLine("}");
+	PopIndent();
+WriteLine("}");
+	PopIndent();
+WriteLine("}");
+PopIndent();
+WriteLine( "#endregion");
+PopIndent();
+}
+
+private void CreateEntity(dynamic table)
+
+{
+WriteLine( "#region entity factory");
+
+Write ("public class ");
+Write (GetLetterCase( table.name,false));
+PushIndent("\t");
+WriteLine("{");
+
+foreach  (dynamic field in table["field"])
+{
+if  (field !=  null  && field.name !=  null)
+{
+WriteLine( string.Format("{0} _{1};", GetCSharpClassType(field), GetLetterCase(field.name, true)));
+WriteLine( string.Format("public {0} {1}", GetCSharpClassType(field), GetLetterCase(field.name, false)));
+PushIndent("\t");
+	WriteLine("{");
+WriteLine( string.Format("get {1}return  this._{0};{2}", GetLetterCase(field.name, true), "{","}"));
+WriteLine( string.Format("set {1} this._{0} =  value;{2}", GetLetterCase(field.name, true), "{","}"));
+WriteLine("}");
+PopIndent();
+
+}
+}
+	
+WriteLine("}");
+PopIndent();
+WriteLine("#endregion");	
+}
+
+private void CreateGetAll(dynamic table)
+
+{
+	WriteLine( "#region GetAll factory");
+
+
+dynamic  primaryKey= GetPrimaryField(table);
+string primaryKeyName = "No primary found";
+if  (primaryKey !=  null)
+primaryKeyName = (string) primaryKey.name;
+
+
+WriteLine ( string.Format("public partial class {0}Repository : Repository<{0}>", GetLetterCase( table.name, false)));
+PushIndent("\t");
+WriteLine("{");
+WriteLine(string.Format("public {0}Repository(string databaseName) : base(databaseName)", GetLetterCase(table.name,false)));
+PushIndent("\t");
+WriteLine("{");
+WriteLine("}");
+PopIndent();
+
+WriteLine(string.Format("public List<{0}> GetAllFrom{0}()", GetLetterCase( table.name, false)));
+PushIndent ("\t");
+WriteLine("{");
+WriteLine(string.Format( "ISelectionFactory<NullableIdentity> selectionFactory = new GetAllFrom{0}SelectionFactory();",GetLetterCase( table.name, false) ));
+WriteLine("try");
+PushIndent("\t");
+WriteLine("{");
+WriteLine("NullableIdentity nullableIdentity = new NullableIdentity();");
+WriteLine(string.Format("return base.Find(selectionFactory, new GetAllFrom{0}Factory(), nullableIdentity);", GetLetterCase(table.name, false)));
+WriteLine("}");
+PopIndent();
+WriteLine("catch (DbException ex)");
+PushIndent("\t");
+WriteLine("{");
+	
+WriteLine("}");
+PopIndent();
+WriteLine(string.Format( "return new List<{0}>();",  GetLetterCase(table.name, false)));
+WriteLine("}");
+PopIndent();
+
+WriteLine(string.Format("public {0}Repository() : this(PlatformConfig.DefaultDatabaseConnection)", GetLetterCase(table.name,false)));
+PushIndent("\t");
+WriteLine("{");
+WriteLine("}"); 
+PopIndent();
+
+//Start of add
+	WriteLine(string.Format("public void Add( {0} {1} )", GetLetterCase( table.name, false), GetLetterCase( table.name, true)));
+PushIndent ("\t");
+WriteLine("{");
+WriteLine(string.Format( "{0}InsertFactory insertFactory = new {0}InsertFactory();",GetLetterCase( table.name, false) ));
+WriteLine("try");
+PushIndent("\t");
+WriteLine("{");
+
+WriteLine(string.Format("base.Add(insertFactory, {0} );", GetLetterCase(table.name, true)));
+WriteLine("}");
+PopIndent();
+WriteLine("catch (DbException ex)");
+PushIndent("\t");
+WriteLine("{");
+WriteLine("HandleSqlException(ex, insertFactory);");
+WriteLine("}");
+PopIndent();
+WriteLine("}");
+PopIndent();
+	//end of add to repository
+
+
+//Start of Save repositiry
+WriteLine(string.Format("public void Save( {0} {1})", GetLetterCase(table.name, false)  , GetLetterCase(table.name, true)));
+PushIndent ("\t");
+WriteLine("{");
+WriteLine(string.Format( "{0}UpdateFactory updateFactory = new {0}UpdateFactory();",GetLetterCase(table.name , false) ));
+WriteLine("try");
+PushIndent("\t");
+WriteLine("{");
+WriteLine(string.Format("base.Save(updateFactory, {0});", GetLetterCase(table.name, true)));
+WriteLine("}");
+PopIndent();
+WriteLine("catch (DbException ex)");
+PushIndent("\t");
+WriteLine("{");
+WriteLine("HandleSqlException(ex, updateFactory);");
+WriteLine("}");
+PopIndent();
+WriteLine("}");
+PopIndent();
+	//end of save to repository
+
+
+
+
+//Start of delete
+WriteLine(string.Format("public void Remove({0} {1})",GetCSharpClassType(primaryKey),  GetLetterCase( primaryKeyName, true)));
+PushIndent ("\t");
+WriteLine("{");
+WriteLine(string.Format( "IDeleteFactory<{0}> deleteFactory = new {1}DeleteFactory();", GetCSharpClassType(primaryKey) ,GetLetterCase( table.name, false) ));
+WriteLine("try");
+PushIndent("\t");
+WriteLine("{");
+
+WriteLine(string.Format("base.Remove(deleteFactory, {0});", GetLetterCase(primaryKeyName, true)));
+WriteLine("}");
+PopIndent();
+WriteLine("catch (DbException ex)");
+PushIndent("\t");
+WriteLine("{");
+WriteLine("HandleSqlException(ex, deleteFactory);");
+WriteLine("}");
+PopIndent();
+WriteLine("}");
+PopIndent();
+	//end of add to repository
+
+//Start of get by Id
+WriteLine(string.Format("public {0} Get{0}By{1}({2}  {1}  )", GetLetterCase(table.name, false)  , GetLetterCase(primaryKeyName, true),
+	 GetCSharpClassType(primaryKey)));
+PushIndent ("\t");
+WriteLine("{");
+WriteLine(string.Format( "ISelectionFactory<{0}> selectionFactory = new Get{1}By{2}SelectionFactory();", GetCSharpClassType(primaryKey),
+	GetLetterCase(table.name , false), GetLetterCase(primaryKeyName, false) ));
+WriteLine("try");
+PushIndent("\t");
+WriteLine("{");
+WriteLine(string.Format("return base.FindOne(selectionFactory, new GetAllFrom{0}Factory(), {1});", 
+	GetLetterCase(table.name, false), GetLetterCase(primaryKeyName, true)));
+WriteLine("}");
+PopIndent();
+WriteLine("catch (DbException ex)");
+PushIndent("\t");
+WriteLine("{");
+WriteLine("HandleSqlException(ex, selectionFactory);");
+WriteLine("}");
+PopIndent();
+WriteLine("return null;");
+WriteLine("}");
+PopIndent();
+	//end of end of getbyId
+
+WriteLine("private void HandleSqlException(DbException ex, IDbToBusinessEntityNameMapper mapper)");
+PushIndent ("\t");
+WriteLine("{");
+
+WriteLine("throw new RepositoryFailureException(ex);");
+WriteLine("}");
+PopIndent();
+
+
+
+
+WriteLine("}"); //end of the class
+PopIndent();
+
+
+
+WriteLine("#endregion");
+}	
+
+private void ConstructReaderForSelectAll(dynamic table)
+{
+WriteLine( "#region Select factory");
+
+WriteLine ( string.Format("internal class GetAllFrom{0}Factory : IDomainObjectFactory<{0}>", GetLetterCase( table.name, false)));
+PushIndent("\t");
+WriteLine("{");
+WriteLine(string.Format(" public {0} Construct(IDataReader reader)", GetLetterCase( table.name, false)));
+PushIndent ("\t");
+WriteLine("{");
+WriteLine(string.Format( "{1} {0} = new {1}();",GetLetterCase( table.name, true),GetLetterCase( table.name, false) ));
+string type ="";
+foreach (var field in table["field"])
+{
+	WriteLine(string.Format("int {0}Index = reader.GetOrdinal(\"{1}\");",  GetLetterCase( field.name, true),GetLetterCase( field.name, false) ));
+	WriteLine(string.Format("if(!reader.IsDBNull({0}Index ))" , GetLetterCase( field.name, true)));
+PushIndent ("\t");
+WriteLine("{");
+WriteLine ( string.Format( "{0}.{1}= reader. {3}({2}Index );",GetLetterCase( table.name, true), GetLetterCase(field.name, false),
+		  GetLetterCase(field.name, true),
+		  GetReaderMethod(field)));
+ 
+WriteLine("}");
+PopIndent ();
+}
+WriteLine(string.Format( "return {0};", GetLetterCase(table.name, true)));
+WriteLine("}");
+PopIndent();
+
+WriteLine("}");
+PopIndent();
+WriteLine("#endregion");
+}	
+
+
+
+private void CreateGetAllFromSelectFactory(dynamic table)
+{
+WriteLine( "#region get all select factory");
+
+WriteLine ( string.Format("internal class GetAllFrom{0}SelectionFactory : ISelectionFactory<NullableIdentity>", GetLetterCase( table.name, false)));
+PushIndent("\t");
+WriteLine("{");
+
+WriteLine(string.Format("public GetAllFrom{0}SelectionFactory()", GetLetterCase( table.name, false)));
+PushIndent ("\t");
+WriteLine("{");
+
+WriteLine("}");
+PopIndent ();
+
+WriteLine( "public DbCommand ConstructSelectCommand(Database db, NullableIdentity nullableIdentity)");
+string type ="";
+
+PushIndent("\t");
+WriteLine("{");
+
+WriteLine(string.Format("DbCommand command = db.GetStoredProcCommand(\"{0}GetAll\");", GetLetterCase(table.name, false)));
+WriteLine( "return command;");
+	
+WriteLine("}");
+PopIndent ();
+
+WriteLine("public string MapDbParameterToBusinessEntityProperty(string dbParameter)");
+PushIndent("\t");
+WriteLine("{");
+WriteLine("switch (dbParameter)");
+PushIndent("\t");
+WriteLine("{");
+WriteLine("default:");
+WriteLine("return string.Format(System.Globalization.CultureInfo.CurrentCulture, \"Invalid Parameter Name (Create get all from)\" );");
+WriteLine("}");
+PopIndent ();
+WriteLine("}");
+PopIndent ();
+
+
+
+WriteLine("}");
+PopIndent();
+WriteLine("#endregion");
+}	
+
+
+
+private void GetByIdSelectFactory(dynamic table)
+{
+WriteLine( "#region get by id select factory");
+
+	
+dynamic  primaryKey= GetPrimaryField(table);
+string primaryKeyName = "No primary found";
+if  (primaryKey !=  null)
+primaryKeyName = (string) primaryKey.name;
+
+WriteLine ( string.Format("internal class Get{0}By{1}SelectionFactory : ISelectionFactory<{2}>", GetLetterCase( table.name, false)  
+		, GetLetterCase(primaryKeyName, false), GetCSharpClassType(primaryKey)  ));
+PushIndent("\t");
+WriteLine("{");
+
+WriteLine(string.Format("public Get{0}By{1}SelectionFactory()", GetLetterCase( table.name, false), GetLetterCase(primaryKeyName, false)));
+PushIndent ("\t");
+WriteLine("{");
+
+WriteLine("}");
+PopIndent ();
+
+WriteLine( string.Format(  "public DbCommand ConstructSelectCommand(Database db,  {0}  {1})", 
+	GetCSharpClassType (primaryKey),GetLetterCase(primaryKeyName, true))  );
+string type ="";
+
+PushIndent("\t");
+WriteLine("{");
+
+WriteLine(string.Format("DbCommand command = db.GetStoredProcCommand(\"Get{0}By{1}\");", GetLetterCase(table.name, false),
+	GetLetterCase(primaryKeyName, false)));
+WriteLine(string.Format( "db.AddInParameter(command, \"{0}\", {1},  {2});" , GetLetterCase(primaryKeyName, false),
+	GetDbDataType (primaryKey), GetLetterCase(primaryKeyName, true)));
+WriteLine( "return command;");
+	
+WriteLine("}");
+PopIndent ();
+
+WriteLine("public string MapDbParameterToBusinessEntityProperty(string dbParameter)");
+PushIndent("\t");
+WriteLine("{");
+WriteLine("switch (dbParameter)");
+PushIndent("\t");
+WriteLine("{");
+WriteLine(string.Format( "case \"{0}\" :", GetLetterCase(primaryKeyName, false)));
+PushIndent("\t");
+WriteLine(string.Format( "return \"{0}\";", GetLetterCase(primaryKeyName, false)));
+PopIndent();
+
+WriteLine("default:");
+WriteLine(string.Format( "return string.Format(System.Globalization.CultureInfo.CurrentCulture, \"Invalid Parameter Name (Create get all from({0}))\" );",  
+	GetLetterCase(primaryKeyName, false)));
+WriteLine("}");
+PopIndent ();
+WriteLine("}");
+PopIndent ();
+
+
+
+WriteLine("}");
+PopIndent();
+WriteLine("#endregion");
+}
+
+
+private void CreatePersistentManager(dynamic table)
+{
+WriteLine( "#region persistent manager");
+
+dynamic  primaryKey= GetPrimaryField(table);
+string primaryKeyName = "No primary found";
+if  (primaryKey !=  null)
+primaryKeyName = (string) primaryKey.name;
+
+
+WriteLine ( string.Format("	public class  {0}Manager : NgTsManager", GetLetterCase( table.name, false)));
+PushIndent("\t");
+WriteLine("{");
+
+WriteLine(string.Format("public  {0}Manager()", GetLetterCase( table.name, false)));
+PushIndent ("\t");
+WriteLine("{");
+
+WriteLine("}");
+PopIndent ();
+
+WriteLine(string.Format("//public  {0}Manager(NgTsSession session)  : base(session)", GetLetterCase( table.name, false)));
+PushIndent ("\t");
+WriteLine("//{");
+
+WriteLine("//}");
+PopIndent ();
+
+
+WriteLine( string.Format( "public {0} Create{0}( {0} {1})", GetLetterCase(table.name, false), GetLetterCase(table.name, true)));
+string type ="";
+
+PushIndent("\t");
+WriteLine("{");
+
+WriteLine(string.Format( "if (null ==  {0})", GetLetterCase(table.name, true)));
+PushIndent("\t");
+WriteLine("{");
+
+WriteLine( string.Format( "throw new ArgumentNullException(\"{0}\");", GetLetterCase(table.name, false)));
+		
+WriteLine("}");
+PopIndent ();
+
+WriteLine("using (NgTsTransactionScope scope = new NgTsTransactionScope())");
+PushIndent("\t");
+WriteLine("{");
+
+WriteLine( string.Format("_AddUpdate( {0});", GetLetterCase(table.name , true)));
+WriteLine("scope.Complete();");
+		
+WriteLine("}");
+PopIndent ();
+        
+WriteLine(string.Format("return  {0};", GetLetterCase(table.name, true)));
+	
+WriteLine("}");
+PopIndent ();
+
+
+
+WriteLine( string.Format( "public void Update{0}( {0} {1})", GetLetterCase(table.name, false), GetLetterCase(table.name, true)));
+ 
+PushIndent("\t");
+WriteLine("{");
+
+
+
+WriteLine(string.Format( "if (null ==  {0})", GetLetterCase(table.name, true)));
+PushIndent("\t");
+WriteLine("{");
+
+WriteLine( string.Format( "throw new ArgumentNullException(\"{0}\");", GetLetterCase(table.name, false)));
+		
+WriteLine("}");
+PopIndent ();
+
+WriteLine("using (NgTsTransactionScope scope = new NgTsTransactionScope())");
+PushIndent("\t");
+WriteLine("{");
+
+WriteLine( string.Format("_AddUpdate( {0});", GetLetterCase(table.name, true)));
+WriteLine("scope.Complete();");
+		
+WriteLine("}");
+PopIndent ();
+WriteLine("}");
+PopIndent ();
+
+WriteLine( string.Format( "public {0} Get{0}({1} {2})", GetLetterCase(table.name, false), GetCSharpClassType(primaryKey),  
+ GetLetterCase(primaryKeyName, true)));
+PushIndent("\t");
+WriteLine("{");
+WriteLine( string.Format( "return _Get{0}({1});", GetLetterCase( GetCSharpClassType(primaryKey), false),  GetLetterCase(primaryKeyName, true)));
+WriteLine("}");
+PopIndent ();
+
+WriteLine( string.Format( "private {0}Repository _Rep{0};", GetLetterCase(table.name, false)));
+
+WriteLine( string.Format( "protected {0}Repository Rep{0}", GetLetterCase(table.name, false)));
+PushIndent("\t");
+WriteLine("{");
+WriteLine( string.Format( "get {0} return NgTsUtility.GetObject(ref _Rep{1}); {2}", "{", GetLetterCase(table.name, false),"}"));
+WriteLine("}");
+PopIndent ();
+
+WriteLine( string.Format( "private void _DefaultsForCreate({0} {1})", GetLetterCase(table.name, false),GetLetterCase(table.name, true) ));
+PushIndent("\t");
+WriteLine("{");
+WriteLine( string.Format( "//{0}.CreatedDate = DateTime.UtcNow;", GetLetterCase(table.name, true) ));
+WriteLine( string.Format( "//{0}.UpdatedDate = DateTime.UtcNow;", GetLetterCase(table.name, true) ));
+WriteLine( string.Format(  "//{0}.CreatedById = this.Session.MemberEzkey;", GetLetterCase(table.name, true) ));
+WriteLine( string.Format(  "//{0}.UpdatedById = this.Session.MemberEzkey;", GetLetterCase(table.name, true) ));
+WriteLine("}");
+PopIndent ();
+
+WriteLine( string.Format( "private void _DefaultsForUpdate({0} {1})", GetLetterCase(table.name, false),GetLetterCase(table.name, true) ));
+PushIndent("\t");
+WriteLine("{");
+WriteLine( string.Format( "//{0}.UpdatedDate = DateTime.UtcNow;", GetLetterCase(table.name, true) ));
+WriteLine( string.Format( "//{0}.UpdatedById = this.Session.MemberEzkey;", GetLetterCase(table.name, true) ));
+
+WriteLine("}");
+PopIndent ();
+
+
+
+WriteLine( string.Format( "private void _OverrideEdit({0} oldValue, {0} newValue)", GetLetterCase(table.name, false) ));
+PushIndent("\t");
+WriteLine("{");
+WriteLine( string.Format( "//newValue.UpdatedDate = oldValue.UpdatedDate;"));
+WriteLine( string.Format( "//newValue.UpdatedById = oldValueMemberEzkey;" ));
+
+WriteLine("}");
+PopIndent ();
+
+WriteLine( string.Format( "private void _Validate({0} {1})", GetLetterCase(table.name, false), GetLetterCase(table.name, true) ));
+PushIndent("\t");
+WriteLine("{");
+
+WriteLine("}");
+PopIndent ();
+
+WriteLine( string.Format( "private void _AddUpdate({0} {1})", GetLetterCase(table.name, false), GetLetterCase(table.name, true) ));
+PushIndent("\t");
+WriteLine("{");
+
+WriteLine(string.Format( "if (0 == {0}.{1})",GetLetterCase(table.name, true), GetLetterCase(primaryKeyName, false)));
+PushIndent("\t");
+WriteLine("{");
+
+WriteLine( string.Format( "_DefaultsForCreate({0});", GetLetterCase(table.name, true)));
+WriteLine( string.Format( "//ValidationUtility.Validate({0});",GetLetterCase(table.name, true)));
+WriteLine( string.Format( "Rep{0}.Add({1});",GetLetterCase(table.name, false), GetLetterCase(table.name, true)));
+WriteLine("}");
+PopIndent ();
+WriteLine("else");
+PushIndent("\t");
+WriteLine("{");
+WriteLine( string.Format( "{0} old{0};", GetLetterCase(table.name, false)));
+WriteLine( string.Format( "old{0} = _Get{0}({1}.{2});", GetLetterCase(table.name, false),  GetLetterCase(table.name, true), 
+	GetLetterCase(primaryKeyName, false)));
+WriteLine( string.Format( "_DefaultsForUpdate({0});", GetLetterCase(table.name, true)));
+WriteLine( string.Format( "_OverrideEdit(old{0}, {1});", GetLetterCase(table.name, false),  GetLetterCase(table.name, true))); 
+WriteLine( string.Format( "//ValidationUtility.Validate({0});",GetLetterCase(table.name, true)));
+WriteLine( string.Format( "Rep{0}.Save({1});", GetLetterCase(table.name, false), GetLetterCase(table.name, true)));
+	
+WriteLine("}");
+PopIndent (); 
+WriteLine("}");
+PopIndent ();
+
+
+WriteLine( string.Format( "private {0} _Get{0}({1}  {2})", GetLetterCase(table.name, false), GetCSharpClassType(primaryKey),
+ GetLetterCase(primaryKeyName, true) ));
+PushIndent("\t");
+WriteLine("{");
+WriteLine( string.Format( "{0} {1}= this.Rep{0}.Get{0}By{2}({3});", GetLetterCase(table.name, false), GetLetterCase(table.name, true) ,
+ GetLetterCase(primaryKeyName, true), GetLetterCase(primaryKeyName, true) ));
+
+ 
+WriteLine(string.Format( "if (null ==  {0})", GetLetterCase(table.name, true)));
+PushIndent("\t");
+WriteLine("{");
+
+WriteLine( string.Format( "//throw new NgTsException(NgTsErrorCode.Err{0}Invalid, StringRes.Err{0}Invalid({1}));", GetLetterCase(primaryKeyName, true), GetLetterCase(primaryKeyName, false) ));
+
+WriteLine("}");
+PopIndent ();
+
+WriteLine(string.Format( "return {0};", GetLetterCase(table.name, true)));
+WriteLine("}");
+PopIndent();
+ 
+WriteLine("}");
+PopIndent();
+WriteLine("#endregion");
+}	
+
+
+
+ 
+#>
+
+
+
+
+

@@ -1,0 +1,185 @@
+﻿
+<#@ Assembly Name="Microsoft.CSharp.dll" #>
+<#@ Assembly name="$(SolutionDir)packages\AmazedSaint.ElasticObject.1.2.0\lib\net40\AmazedSaint.Elastic.dll" #>
+<#@ Import Namespace="System.Xml" #>
+<#@ Assembly Name="Microsoft.CSharp.dll" #>
+<#@ Assembly name="$(SolutionDir)packages\AmazedSaint.ElasticObject.1.2.0\lib\net40\AmazedSaint.Elastic.dll" #>
+<#@ include file="$(SolutionDir)\Packages\T4.TemplateFileManager.2.1.2\tools\ttinc\TemplateFilemanager.CS.ttinclude" #>
+
+<#@ assembly name="EnvDTE" #>
+<#@ Import Namespace="AmazedSaint.Elastic" #>
+<#@ Import Namespace="System.Collections.Generic" #>
+<#@ Import Namespace="System.Collections" #>
+<#@ Import Namespace="AmazedSaint.Elastic.Lib" #>
+<#@ Import Namespace="System.Globalization" #>
+<#@ Import Namespace="System.Text" #>
+
+
+
+<#@ IntelliSenseLanguage processor="tangibleT4Editor" language="C#" #>
+<#+ 
+//Create an elastic object
+private dynamic FromFile(string file)
+{
+   var path= Host.ResolvePath(file);
+   return XDocument.Load(path).Root.ToElastic();
+}
+
+
+private string GetProperCase(string fieldName)
+{
+	CultureInfo ci = new CultureInfo("en-US");
+	string[] fields =  fieldName.Split ('_');
+	StringBuilder sb  =  new StringBuilder();
+	foreach (string name  in fields)
+	{
+	sb.Append(ci.TextInfo.ToTitleCase(name));
+	}
+		
+	return  sb.ToString();
+
+}
+
+
+private string GetLetterCase(string name, bool isCamelCase )
+{
+	CultureInfo ci = new CultureInfo("en-US");
+	string[] fields =  name.Split ('_');
+	StringBuilder sb  =  new StringBuilder();
+
+	foreach (string item  in fields)
+	{
+	if (sb.Length <=0 && isCamelCase)
+		sb.Append(ci.TextInfo.ToLower(item));
+	else if (fields.Length>1 )
+		sb.Append(ci.TextInfo.ToTitleCase(item));
+	else sb.Append( item.Substring(0,1).ToUpper()+ item.Substring(1));
+	}
+		
+	return  sb.ToString();
+
+}
+
+
+
+
+private string  GetIOProperty (dynamic field)
+{
+
+string prop =  string.Format ("private {0}  {1};",  GetCSharpClassType (field), GetLetterCase(field.name, true));
+return prop;
+}
+
+private object GetPrimaryField(dynamic table)
+{
+	foreach (var member in table["field"])
+    {
+	    if ( member.primary_key.ToString() == "yes")
+        {
+			return  member;
+        }
+	}
+	return null;
+}
+
+private string GetCSharpClassType(dynamic field)
+{
+	if (field ==  null)
+		return "missing Att";
+	string type  ="";
+	if (field.type !=  null)
+	 type  = field.type;
+	string retType ="string";
+
+	if (type.StartsWith("int") ==true )
+		retType = "long";
+	else if (type.StartsWith("tiny")==true)
+		retType = "int";
+	else if (type.StartsWith ("date")==true)
+		retType  = "DateTime";
+	else if (type.StartsWith("decimal")==true)
+		retType = "decimal";
+	else if (type.StartsWith("double")==true)
+		retType  ="double";
+return retType;
+}
+	
+
+private string GetDbDataType(dynamic field)
+{
+	if (field ==  null)
+		return "No PrimaryKey defined";
+	string type  ="";
+	if (field.type !=  null)
+	 type  = field.type;
+	string retType ="DbType.String";
+
+	if (type.StartsWith("int") ==true )
+		retType = "DbType.Int64";
+	else if (type.StartsWith("tiny")==true)
+		retType = "DbType.Int32";
+	else if (type.StartsWith ("date")==true)
+		retType  = "DbType.DateTime";
+	else if (type.StartsWith("decimal")==true)
+		retType = "DbType.Decimal";
+	else if (type.StartsWith("double")==true)
+		retType  ="DbType.Double";
+
+	return  retType;
+}
+
+private string GetReaderMethod(dynamic field)
+{
+
+if (field ==  null)
+		return "typeMissing";
+	string type  ="";
+	if (field.type !=  null)
+	type  = field.type;
+	string retType ="GetString";
+	if (type.StartsWith("int") ==true )
+		retType = "GetInt64";
+	else if (type.StartsWith("tiny")==true)
+		retType = "GetInt32";
+	else if (type.StartsWith ("date")==true)
+		retType  = "GetDateTime";
+	else if (type.StartsWith("decimal")==true)
+		retType = "GetDecimal";
+	else if (type.StartsWith("double")==true)
+		retType  ="GetDouble";
+
+	return  retType;
+}
+
+
+private void WriteUsingStatement ()
+{
+	WriteLine ("using System.Data;");
+	WriteLine ("using System.Data.Common;");
+	WriteLine ("using Microsoft.Practices.EnterpriseLibrary.Data;");
+	WriteLine("using NgTs.DataAccess.Generic;");
+
+}
+
+ 
+//Write a class
+private void CreateClassIO(dynamic table)
+{ 
+ 
+//Create class  
+Write(" public class ");
+WriteLine( GetProperCase(table.name)); 
+
+WriteLine("{");
+PushIndent("\t");	
+ 
+	foreach (var member in table["field"])
+    {
+	  WriteLine (GetIOProperty (member));
+	}
+ PopIndent();
+WriteLine ("}");	
+}	
+
+
+#>

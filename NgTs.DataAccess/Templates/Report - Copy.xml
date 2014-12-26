@@ -1,0 +1,1162 @@
+﻿<?xml version="1.0" ?>
+<schema>
+  <table returnObjectType="multiple" name="CancellationReport">
+    t.operator_pnr  , td.ticket_status_id,   travel_date, t.user_id, ticket_at, tc.updated_by cancelledBy,"
+    + "tc.Updated_at cancelledAt, td.seat_fare, from_station_id,to_station_id,trip_code, td.seat_name,tc.cancellation_charges, tc.refund_amount
+    <field name="operator_pnr" type="String" primary_key="yes" />
+    <field name="ticket_status_id" type="int" />
+    <field name="travel_date" type="String" />
+    <field name="user_id" type="int" />
+    <field name="ticket_at" type="String" />
+    <field name="user_group_id" type="int(11)" />
+    <field name="active_from" type="datetime" />
+    <field name="active_to" type="datetime" />
+    <field name="day_of_week" type="char(7)" />
+    <field name="value" type="decimal(5,2)" />
+    <field name="is_percentage_flag" type="tinyint(4)" />
+    <field name="is_travel_date_flag" type="tinyint(4)" />
+    <field name="max_usage_limit_per_user" type="int(11)" />
+    <field name="device_medium" type="enum('ALL','WEB','API','MOB')" />
+    <field name="schedule_code" type="text" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="addons_discount_category">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="namespace_id" type="int(11)" />
+    <field name="code" type="varchar(12)" />
+    <field name="name" type="varchar(45)" />
+    <field name="description" type="varchar(80)" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="addons_discount_coupon">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="code" type="varchar(12)" />
+    <field name="namespace_id" type="int(11)" />
+    <field name="coupon" type="varchar(45)" />
+    <field name="active_description" type="varchar(120)" />
+    <field name="error_description" type="varchar(120)" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="addons_type">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="code" type="varchar(4)" />
+    <field name="name" type="varchar(45)" />
+    <field name="credit_debit_flag" type="enum('Cr','Dr')" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="amenities">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="code" type="varchar(12)" />
+    <field name="name" type="varchar(45)" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="api_commission">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="code" type="varchar(12)" />
+    <field name="namespace_id" type="int(11)" />
+    <field name="inventory_id" type="int(11)" />
+    <field name="value" type="decimal(6,2)" />
+    <field name="percentage_flag" type="tinyint(4)" />
+    <field name="active_from" type="date" />
+    <field name="active_to" type="date" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="audit_log">
+    <field name="id" type="bigint(20)" primary_key="yes" />
+    <field name="namespace_id" type="int(11)" />
+    <field name="code" type="varchar(15)" />
+    <field name="table_name" type="varchar(60)" />
+    <field name="log" type="text" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="bus">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="namespace_id" type="int(11)" />
+    <field name="code" type="varchar(12)" />
+    <field name="name" type="varchar(45)" />
+    <field name="category_code" type="varchar(30)" />
+    <field name="display_name" type="varchar(45)" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="bus_layout">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="code" type="varchar(12)" />
+    <field name="namespace_id" type="int(11)" />
+    <field name="bus_id" type="int(11)" />
+    <field name="row_pos" type="tinyint(4)" />
+    <field name="column_pos" type="tinyint(4)" />
+    <field name="seat_name" type="varchar(8)" />
+    <field name="layer" type="tinyint(4)" />
+    <field name="bus_seat_type_id" type="int(11)" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="bus_seat_type">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="code" type="varchar(3)" />
+    <field name="name" type="varchar(15)" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="bus_type_category">
+    <field name="id" type="tinyint(4)" primary_key="yes" />
+    <field name="code" type="varchar(2)" />
+    <field name="name" type="varchar(20)" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="bus_type_category_details">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="code" type="varchar(4)" />
+    <field name="name" type="varchar(20)" />
+    <field name="bus_type_category_id" type="tinyint(4)" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="bus_vehicle">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="code" type="varchar(12)" />
+    <field name="namespace_id" type="int(11)" />
+    <field name="name" type="varchar(45)" />
+    <field name="bus_id" type="int(11)" />
+    <field name="registation_date" type="date" />
+    <field name="registation_number" type="varchar(12)" />
+    <field name="lic_number" type="varchar(30)" />
+    <field name="gps_device_code" type="varchar(60)" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="cancellation_policy">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="from_value" type="int(11)" />
+    <field name="to_value" type="int(11)" />
+    <field name="deduction_amount" type="decimal(10,2)" />
+    <field name="percentage_flag" type="tinyint(4)" />
+    <field name="policy_pattern" type="enum('MIN','AM','PM')" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="cancellation_policy_group">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="group_key" type="varchar(45)" />
+    <field name="cancellation_policy_id" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="commission">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="code" type="varchar(12)" />
+    <field name="namespace_id" type="int(11)" />
+    <field name="user_id" type="int(11)" />
+    <field name="value" type="decimal(6,2)" />
+    <field name="percentage_flag" type="tinyint(4)" />
+    <field name="active_from" type="date" />
+    <field name="active_to" type="date" />
+    <field name="credit_limit" type="decimal(10,2)" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="flat_ticket_transaction">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="ticket_code" type="varchar(12)" />
+    <field name="from_station_name" type="varchar(40)" />
+    <field name="to_station_name" type="varchar(40)" />
+    <field name="from_station_id" type="int(11)" />
+    <field name="to_station_id" type="int(11)" />
+    <field name="travel_date" type="datetime" />
+    <field name="bording_point_name" type="varchar(60)" />
+    <field name="bording_point_at" type="datetime" />
+    <field name="ticket_amount" type="decimal(10,2)" />
+    <field name="passenger_name" type="text" />
+    <field name="age" type="varchar(100)" />
+    <field name="gendar" type="varchar(40)" />
+    <field name="booked_seat_name" type="varchar(100)" />
+    <field name="booked_seat_code" type="varchar(120)" />
+    <field name="booked_transaction_amount" type="decimal(10,2)" />
+    <field name="cancellated_transaction_amount" type="decimal(10,2)" />
+    <field name="cancelled_seat_name" type="varchar(100)" />
+    <field name="cancelled_seat_code" type="varchar(100)" />
+    <field name="booked_user_id" type="int(11)" />
+    <field name="booked_user_role_type" type="tinyint(4)" />
+    <field name="ticket_booked_at" type="datetime" />
+    <field name="ticket_cancelled_at" type="datetime" />
+    <field name="payment_gateway_name" type="varchar(45)" />
+    <field name="payment_gateway_code" type="varchar(45)" />
+    <field name="booked_device_medium" type="enum('WEB','TAB')" />
+    <field name="namespace_id" type="int(11)" />
+    <field name="cancelled_user_role_type" type="tinyint(4)" />
+    <field name="trip_code" type="varchar(45)" />
+    <field name="trip_stage_code" type="varchar(45)" />
+    <field name="cancellation_terms_id" type="int(11)" />
+  </table>
+  <table returnObjectType="multiple" name="inventory">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="code" type="varchar(10)" />
+    <field name="namespace_id" type="int(11)" />
+    <field name="inventory_mode_id" type="int(11)" />
+    <field name="api_namespace_id" type="int(11)" />
+    <field name="api_token" type="varchar(45)" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="timestamp" />
+  </table>
+  <table returnObjectType="multiple" name="inventory_control">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="code" type="varchar(12)" />
+    <field name="namespace_id" type="int(11)" />
+    <field name="inventory_id" type="int(11)" />
+    <field name="user_group_id" type="int(11)" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="inventory_mode">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="code" type="varchar(5)" />
+    <field name="name" type="varchar(45)" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="login_history">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="namespace_id" type="int(11)" />
+    <field name="user_id" type="int(11)" />
+    <field name="login_privider" type="enum('EB','FB','GM')" />
+    <field name="device_medium" type="enum('WEB','API','MOB')" />
+    <field name="auth_token" type="varchar(45)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="menu">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="code" type="varchar(12)" />
+    <field name="name" type="varchar(25)" />
+    <field name="link" type="varchar(80)" />
+    <field name="lookup_id" type="int(11)" />
+    <field name="default_flag" type="tinyint(4)" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="menu_events">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="code" type="varchar(12)" />
+    <field name="name" type="varchar(25)" />
+    <field name="operation_code" type="varchar(25)" />
+    <field name="action_type" type="tinyint(4)" />
+    <field name="menu_id" type="int(11)" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="namespace">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="code" type="varchar(20)" />
+    <field name="name" type="varchar(65)" />
+    <field name="pin" type="varchar(4)" />
+    <field name="mode" type="enum('OWN','API')" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="namespace_cancellation_terms">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="code" type="varchar(12)" />
+    <field name="name" type="varchar(60)" />
+    <field name="namespace_id" type="int(11)" />
+    <field name="cancellation_policy_group_key" type="varchar(65)" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="namespace_settings">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="namespace_id" type="int(11)" primary_key="yes" />
+    <field name="customer_register_flag" type="tinyint(1)" />
+    <field name="allow_last_boarding_point_flag" type="tinyint(1)" primary_key="yes" />
+    <field name="cancellation_commission_revoke_flag" type="tinyint(1)" />
+    <field name="notification_sms_flag" type="tinyint(1)" />
+    <field name="notification_email_flag" type="tinyint(1)" />
+    <field name="max_seat_per_transaction" type="tinyint(4)" />
+    <field name="seat_block_time" type="tinyint(4)" />
+    <field name="time_format" type="tinyint(4)" />
+    <field name="pnr_start_code" type="varchar(3)" />
+    <field name="date_format" type="varchar(10)" />
+    <field name="sender_mail_id" type="varchar(45)" />
+    <field name="sendar_sms_name" type="varchar(6)" />
+    <field name="domain_url" type="varchar(45)" />
+    <field name="ticket_request_flag" type="tinyint(4)" />
+    <field name="ticket_rac" type="tinyint(4)" />
+    <field name="phone_booking_flag" type="tinyint(4)" />
+    <field name="phone_ticket_notification_before_minitues" type="tinyint(4)" />
+    <field name="boarding_reporting_minitues" type="int(11)" />
+    <field name="phone_booking_cancellation_block_minutes" type="int(11)" />
+    <field name="dropping_point_requried_flag" type="tinyint(1)" />
+    <field name="active_flag" type="tinyint(4)" primary_key="yes" />
+    <field name="updated_by" type="int(11)" primary_key="yes" />
+    <field name="updated_at" type="datetime" primary_key="yes" />
+  </table>
+  <table returnObjectType="multiple" name="namespace_station">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="station_id" type="int(11)" />
+    <field name="namespace_id" type="int(11)" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="namespace_terms">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="code" type="varchar(12)" />
+    <field name="terms" type="varchar(200)" />
+    <field name="sequence_id" type="tinyint(4)" />
+    <field name="namespace_id" type="int(11)" />
+    <field name="active_flag" type="tinyint(1)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="notification_mode">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="code" type="varchar(5)" />
+    <field name="name" type="varchar(45)" />
+    <field name="description" type="varchar(120)" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="notification_template">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="code" type="varchar(12)" />
+    <field name="templete" type="text" />
+    <field name="ticket_status_id" type="int(11)" />
+    <field name="notification_mode_id" type="int(11)" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="operator">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="code" type="varchar(12)" />
+    <field name="name" type="varchar(60)" />
+    <field name="namespace_id" type="int(11)" />
+    <field name="inventory_id" type="int(11)" />
+    <field name="api_operator_code" type="varchar(60)" />
+    <field name="api_operator_name" type="varchar(60)" />
+    <field name="mobile_ticket_flag" type="tinyint(4)" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="operator_booking_transaction">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="ticket_id" type="int(11)" />
+    <field name="transaction_user_id" type="int(11)" />
+    <field name="ticket_amount" type="decimal(7,2)" />
+    <field name="commission" type="decimal(6,2)" />
+    <field name="namespace_id" type="int(11)" />
+    <field name="api_namespace_id" type="int(11)" />
+    <field name="operator_payment_transaction_id" type="int(11)" />
+    <field name="credit_debit_flag" type="enum('Cr','Dr')" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="operator_payment_transaction">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="code" type="varchar(12)" />
+    <field name="namespace_id" type="int(11)" />
+    <field name="api_namespace_id" type="int(11)" />
+    <field name="transaction_amount" type="decimal(8,2)" />
+    <field name="transaction_at" type="datetime" />
+    <field name="remarks" type="text" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="organization">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="code" type="varchar(12)" />
+    <field name="name" type="varchar(45)" />
+    <field name="namespace_id" type="int(11)" />
+    <field name="address1" type="varchar(100)" />
+    <field name="address2" type="varchar(120)" />
+    <field name="station_id" type="int(11)" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="payment_acknowledge_status">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="code" type="varchar(12)" />
+    <field name="name" type="varchar(40)" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="payment_gateway_logging">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="code" type="varchar(20)" />
+    <field name="log_data" type="text" />
+    <field name="created_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="payment_gateway_partner">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="code" type="varchar(10)" />
+    <field name="name" type="varchar(45)" />
+    <field name="namespace_id" type="int(11)" />
+    <field name="payment_mode_id" type="int(11)" />
+    <field name="gateway_provider_id" type="int(11)" />
+    <field name="api_provider_code" type="varchar(10)" />
+    <field name="active_flag" type="tinyint(1)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="payment_gateway_pre_transaction">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="code" type="varchar(20)" />
+    <field name="namespace_id" type="int(11)" />
+    <field name="gateway_partner_id" type="int(11)" />
+    <field name="order_code" type="varchar(12)" />
+    <field name="amount" type="decimal(7,2)" />
+    <field name="service_charge" type="decimal(7,2)" />
+    <field name="type" type="enum('PA','RF')" />
+    <field name="status" type="enum('I','P','R','S','F')" />
+    <field name="failure_error_code" type="varchar(20)" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="payment_gateway_provider">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="code" type="varchar(12)" />
+    <field name="name" type="varchar(40)" />
+    <field name="service_name" type="varchar(45)" />
+    <field name="active_flag" type="tinyint(1)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="payment_gateway_transaction">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="code" type="varchar(20)" />
+    <field name="namespace_id" type="int(11)" />
+    <field name="payment_gateway_partner_id" type="int(11)" />
+    <field name="gateway_transaction_id" type="varchar(20)" />
+    <field name="amount" type="decimal(7,2)" />
+    <field name="service_charge" type="decimal(7,2)" />
+    <field name="type" type="enum('PA','RF')" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+    <field name="order_code" type="varchar(20)" />
+  </table>
+  <table returnObjectType="multiple" name="payment_merchant_gateway_credentials">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="code" type="varchar(12)" />
+    <field name="namespace_id" type="int(11)" />
+    <field name="gateway_provider_id" type="int(11)" />
+    <field name="access_code" type="varchar(50)" />
+    <field name="access_key" type="varchar(80)" />
+    <field name="return_url" type="varchar(120)" />
+    <field name="attr_1" type="varchar(60)" />
+    <field name="properties_file_name" type="varchar(40)" />
+    <field name="service_charge_value" type="decimal(6,2)" />
+    <field name="percentage_flag" type="tinyint(4)" />
+    <field name="customer_bare" type="decimal(6,2)" />
+    <field name="active_flag" type="tinyint(1)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="payment_merchant_gateway_schedule">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="code" type="varchar(12)" />
+    <field name="name" type="varchar(45)" />
+    <field name="namespace_id" type="int(11)" />
+    <field name="gateway_partner_id" type="int(11)" />
+    <field name="user_group_id" type="int(11)" />
+    <field name="device_medium" type="enum('WEB','MOB','TAB')" />
+    <field name="from_date" type="datetime" />
+    <field name="to_date" type="datetime" />
+    <field name="active_flag" type="tinyint(1)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="payment_mode">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="code" type="varchar(12)" />
+    <field name="name" type="varchar(30)" />
+    <field name="active_flag" type="tinyint(1)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="payment_transaction">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="code" type="varchar(12)" />
+    <field name="namespace_id" type="int(11)" />
+    <field name="user_id" type="int(11)" />
+    <field name="transaction_mode_id" type="int(11)" />
+    <field name="transaction_type_id" type="int(11)" />
+    <field name="amount" type="decimal(10,2)" />
+    <field name="credit_debit_flag" type="enum('Cr','Dr')" />
+    <field name="amount_received_date" type="date" />
+    <field name="transaction_at" type="datetime" />
+    <field name="payment_handle_by" type="int(11)" />
+    <field name="payment_acknowledge_status_id" type="int(11)" />
+    <field name="user_transaction_id" type="int(11)" />
+    <field name="user_commission_amount" type="decimal(8,2)" />
+    <field name="service_tax" type="decimal(6,2)" />
+    <field name="tds" type="decimal(6,2)" />
+    <field name="remarks" type="text" />
+    <field name="active_flag" type="varchar(45)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="report_query">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="code" type="varchar(12)" />
+    <field name="name" type="varchar(45)" />
+    <field name="description" type="varchar(120)" />
+    <field name="query" type="text" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="route">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="code" type="varchar(12)" />
+    <field name="from_station_id" type="int(11)" />
+    <field name="to_station_id" type="int(11)" />
+    <field name="namespace_id" type="int(11)" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="schedule">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="code" type="varchar(10)" />
+    <field name="namespace_id" type="int(11)" />
+    <field name="name" type="varchar(40)" />
+    <field name="active_from" type="date" />
+    <field name="active_to" type="date" />
+    <field name="mobile_ticket_flag" type="tinyint(1)" />
+    <field name="service_number" type="varchar(15)" />
+    <field name="display_name" type="varchar(45)" />
+    <field name="pnr_start_code" type="varchar(3)" />
+    <field name="ticket_rac_limit" type="tinyint(4)" />
+    <field name="boarding_reporting_minitues" type="int(11)" />
+    <field name="day_of_week" type="char(7)" />
+    <field name="prerequisites" type="char(6)" />
+    <field name="service_tax" type="decimal(4,2)" />
+    <field name="lookup_id" type="int(11)" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="schedule_bus">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="code" type="varchar(12)" />
+    <field name="namespace_id" type="int(11)" />
+    <field name="schedule_id" type="int(11)" />
+    <field name="bus_id" type="int(11)" />
+    <field name="amenities_code" type="varchar(120)" />
+    <field name="active_from" type="date" />
+    <field name="active_to" type="date" />
+    <field name="day_of_week" type="char(7)" />
+    <field name="lookup_id" type="int(11)" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="schedule_cancellation_terms">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="code" type="varchar(12)" />
+    <field name="namespace_id" type="int(11)" />
+    <field name="schedule_id" type="int(11)" />
+    <field name="cancellation_policy_id" type="int(11)" />
+    <field name="user_group_id" type="int(11)" />
+    <field name="active_from" type="date" />
+    <field name="active_to" type="date" />
+    <field name="day_of_week" type="varchar(7)" />
+    <field name="lookup_id" type="int(11)" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="schedule_control">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="code" type="varchar(12)" />
+    <field name="namespace_id" type="int(11)" />
+    <field name="schedule_id" type="int(11)" />
+    <field name="user_group_id" type="int(11)" />
+    <field name="open_minutes" type="int(11)" />
+    <field name="close_minutes" type="int(11)" />
+    <field name="active_from" type="date" />
+    <field name="active_to" type="date" />
+    <field name="day_of_week" type="char(7)" />
+    <field name="allow_booking_flag" type="tinyint(4)" />
+    <field name="lookup_id" type="int(11)" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="schedule_discount_fare">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="code" type="varchar(12)" />
+    <field name="namespace_id" type="int(11)" />
+    <field name="schedule_id" type="int(11)" />
+    <field name="user_group_id" type="int(11)" />
+    <field name="discount_value" type="double" />
+    <field name="percentage_flag" type="tinyint(4)" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="schedule_seat_auto_release">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="code" type="varchar(12)" />
+    <field name="namespace_id" type="int(11)" />
+    <field name="schedule_id" type="int(11)" />
+    <field name="bus_id" type="int(11)" />
+    <field name="group_id" type="int(11)" />
+    <field name="active_from" type="date" />
+    <field name="active_to" type="date" />
+    <field name="day_of_week" type="char(7)" />
+    <field name="release_minutes" type="int(11)" />
+    <field name="release_type" type="tinyint(4)" />
+    <field name="seat_codes" type="varchar(250)" />
+    <field name="lookup_id" type="int(11)" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="schedule_seat_visibility">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="code" type="varchar(12)" />
+    <field name="schedule_id" type="int(11)" />
+    <field name="namespace_id" type="int(11)" />
+    <field name="bus_id" type="int(11)" />
+    <field name="refference_id" type="int(11)" />
+    <field name="refference_type" type="enum('UR','GR')" />
+    <field name="active_from" type="date" />
+    <field name="active_to" type="date" />
+    <field name="day_of_week" type="char(7)" />
+    <field name="visibility_type" type="enum('ACAT','HIDE')" />
+    <field name="seat_codes" type="text" />
+    <field name="lookup_id" type="int(11)" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="schedule_stage">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="code" type="varchar(12)" />
+    <field name="namespace_id" type="int(11)" />
+    <field name="schedule_id" type="int(11)" />
+    <field name="from_station_id" type="int(11)" />
+    <field name="to_station_id" type="int(11)" />
+    <field name="bus_seat_type_id" type="int(11)" />
+    <field name="user_group_id" type="int(11)" />
+    <field name="fare" type="decimal(6,2)" />
+    <field name="active_from" type="date" />
+    <field name="active_to" type="date" />
+    <field name="day_of_week" type="varchar(7)" />
+    <field name="lookup_id" type="int(11)" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="schedule_station">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="code" type="varchar(12)" />
+    <field name="namespace_id" type="int(11)" />
+    <field name="active_from" type="date" />
+    <field name="active_to" type="date" />
+    <field name="schedule_id" type="int(11)" />
+    <field name="station_id" type="int(11)" />
+    <field name="minitues" type="int(11)" />
+    <field name="day_of_week" type="char(7)" />
+    <field name="station_sequence" type="tinyint(4)" />
+    <field name="lookup_id" type="int(11)" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="schedule_station_point">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="code" type="varchar(12)" />
+    <field name="namespace_id" type="int(11)" />
+    <field name="schedule_id" type="int(11)" />
+    <field name="station_id" type="int(11)" />
+    <field name="station_point_id" type="int(11)" />
+    <field name="minitues" type="int(11)" />
+    <field name="credit_debit_flag" type="enum('Cr','Dr')" />
+    <field name="active_from" type="date" />
+    <field name="active_to" type="date" />
+    <field name="day_of_week" type="char(7)" />
+    <field name="lookup_id" type="int(11)" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="sequence">
+    <field name="sequ_id" type="int(11)" />
+    <field name="entity_code" type="char(5)" />
+    <field name="code" type="varchar(10)" />
+    <field name="description" type="varchar(45)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="state">
+    <field name="id" type="tinyint(4)" primary_key="yes" />
+    <field name="code" type="varchar(12)" />
+    <field name="name" type="varchar(40)" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="station">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="code" type="varchar(12)" />
+    <field name="name" type="varchar(60)" />
+    <field name="state_id" type="tinyint(4)" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="station_point">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="code" type="varchar(12)" />
+    <field name="namespace_id" type="int(11)" />
+    <field name="station_id" type="int(11)" />
+    <field name="name" type="varchar(80)" />
+    <field name="address" type="varchar(120)" />
+    <field name="landmark" type="varchar(80)" />
+    <field name="contact_number" type="varchar(33)" />
+    <field name="latitude" type="varchar(20)" />
+    <field name="longitude" type="varchar(20)" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="ticket">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="code" type="varchar(12)" />
+    <field name="namespace_id" type="int(11)" />
+    <field name="user_id" type="int(11)" />
+    <field name="for_user_id" type="int(11)" />
+    <field name="travel_date" type="date" />
+    <field name="travel_minutes" type="int(11)" />
+    <field name="from_station_id" type="int(11)" />
+    <field name="to_station_id" type="int(11)" />
+    <field name="boarding_point_id" type="int(11)" />
+    <field name="boarding_point_minutes" type="int(11)" />
+    <field name="dropping_point_id" type="int(11)" />
+    <field name="dropping_point_minutes" type="int(11)" />
+    <field name="operator_id" type="int(11)" />
+    <field name="trip_code" type="varchar(25)" />
+    <field name="trip_stage_code" type="varchar(45)" />
+    <field name="mobile_number" type="varchar(10)" />
+    <field name="email_id" type="varchar(60)" />
+    <field name="ticket_amount" type="decimal(7,2)" />
+    <field name="lookup_id" type="int(11)" />
+    <field name="service_number" type="varchar(20)" />
+    <field name="cancellation_policy_id" type="int(11)" />
+    <field name="reporting_minutes" type="int(11)" />
+    <field name="operator_pnr" type="varchar(45)" />
+    <field name="journey_type" type="enum('OW','RT')" />
+    <field name="device_medium" type="enum('WEB','API','MOB')" />
+    <field name="source" type="enum('OWN','API')" />
+    <field name="ticket_status_id" type="int(11)" />
+    <field name="payment_gateway_partner_code" type="varchar(12)" />
+    <field name="remarks" type="varchar(45)" />
+    <field name="ticket_at" type="datetime" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="ticket_addons_detail">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="namespace_id" type="int(11)" />
+    <field name="ticket_addons_transaction_id" type="int(11)" />
+    <field name="ticket_details_id" type="int(11)" />
+    <field name="addons_type_id" type="int(11)" />
+    <field name="addons_id" type="int(11)" />
+    <field name="amount" type="decimal(7,2)" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="ticket_addons_transaction">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="namespace_id" type="int(11)" />
+    <field name="addons_type_id" type="int(11)" />
+    <field name="ticket_id" type="int(11)" />
+    <field name="addons_id" type="int(11)" />
+    <field name="transaction_amount" type="decimal(7,2)" />
+    <field name="credit_debit_flag" type="enum('Cr','Dr')" />
+    <field name="active_flag" type="varchar(45)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="ticket_audit">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="namespace_id" type="int(11)" />
+    <field name="ticket_id" type="int(11)" />
+    <field name="user_id" type="int(11)" />
+    <field name="ticket_status_id" type="int(11)" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="ticket_cancel_denial">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="ticket_id" type="int(11)" />
+    <field name="operator_response" type="text" />
+    <field name="seat_name" type="varchar(10)" />
+    <field name="attempt_count" type="tinyint(4)" />
+    <field name="ticket_denial_at" type="datetime" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="timestamp" />
+  </table>
+  <table returnObjectType="multiple" name="ticket_cancellation_detail">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="ticket_id" type="int(11)" />
+    <field name="ticket_detail_id" type="int(11)" />
+    <field name="ticket_transaction_id" type="int(11)" />
+    <field name="cancellation_charges" type="decimal(10,2)" />
+    <field name="refund_amount" type="decimal(10,2)" />
+    <field name="device_medium" type="enum('WEB','API','MOB')" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="ticket_detail">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="ticket_id" type="int(11)" />
+    <field name="seat_name" type="varchar(10)" />
+    <field name="seat_code" type="varchar(10)" />
+    <field name="seat_type" type="enum('ST','SL')" />
+    <field name="ticket_status_id" type="int(11)" />
+    <field name="passenger_name" type="varchar(60)" />
+    <field name="passenger_age" type="tinyint(4)" />
+    <field name="seat_gender" type="tinyint(4)" />
+    <field name="seat_fare" type="decimal(10,2)" />
+    <field name="service_tax" type="decimal(6,2)" />
+    <field name="seat_info" type="varchar(20)" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="ticket_notification">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="code" type="varchar(12)" />
+    <field name="ticket_id" type="int(11)" />
+    <field name="ticket_status_id" type="int(11)" />
+    <field name="api_transaction_id" type="varchar(45)" />
+    <field name="notification_mode_id" type="int(11)" />
+    <field name="message" type="varchar(250)" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="ticket_status">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="code" type="varchar(5)" />
+    <field name="name" type="varchar(45)" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="timestamp" />
+  </table>
+  <table returnObjectType="multiple" name="ticket_template">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="code" type="varchar(12)" />
+    <field name="namespace_id" type="int(11)" />
+    <field name="name" type="varchar(40)" />
+    <field name="template" type="text" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="ticket_transaction">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="code" type="varchar(12)" />
+    <field name="namespace_id" type="int(11)" />
+    <field name="user_id" type="int(11)" />
+    <field name="ticket_id" type="int(11)" />
+    <field name="transaction_type_id" type="int(11)" />
+    <field name="transaction_mode_id" type="int(11)" />
+    <field name="transaction_seat_count" type="tinyint(4)" />
+    <field name="user_commission_amount" type="decimal(6,2)" />
+    <field name="amount" type="decimal(6,2)" />
+    <field name="service_tax" type="decimal(8,2)" />
+    <field name="tds" type="decimal(6,2)" />
+    <field name="payment_transaction_id" type="int(11)" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="transaction_mode">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="code" type="varchar(8)" />
+    <field name="name" type="varchar(45)" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="transaction_type">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="code" type="varchar(8)" />
+    <field name="name" type="varchar(25)" />
+    <field name="credit_debit_flag" type="enum('Cr','Dr')" />
+    <field name="description" type="varchar(80)" />
+    <field name="active_flag" type="tinyint(4)" />
+  </table>
+  <table returnObjectType="multiple" name="trip">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="code" type="varchar(40)" />
+    <field name="namespace_id" type="int(11)" />
+    <field name="schedule_id" type="int(11)" />
+    <field name="travel_date" type="date" />
+    <field name="driver_name" type="varchar(45)" />
+    <field name="phone_number" type="varchar(10)" />
+    <field name="trip_close_flag" type="tinyint(4)" />
+    <field name="bus_vehicle_id" type="int(11)" />
+    <field name="remarks" type="text" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="trip_cash_head">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="code" type="varchar(12)" />
+    <field name="namespace_id" type="int(11)" />
+    <field name="name" type="varchar(30)" />
+    <field name="descriptions" type="varchar(45)" />
+    <field name="credit_debit_flag" type="enum('Cr','Dr')" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="trip_cash_transaction">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="code" type="varchar(12)" />
+    <field name="namespace_id" type="int(11)" />
+    <field name="amount" type="decimal(8,2)" />
+    <field name="trip_id" type="int(11)" />
+    <field name="trip_cash_head_id" type="int(11)" />
+    <field name="transaction_mode_id" type="int(11)" />
+    <field name="remarks" type="text" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="trip_detail">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="code" type="varchar(60)" />
+    <field name="trip_id" type="int(11)" />
+    <field name="namespace_id" type="int(11)" />
+    <field name="inventory_id" type="int(11)" />
+    <field name="operator_id" type="int(11)" />
+    <field name="api_trip_code" type="varchar(60)" />
+    <field name="from_station_id" type="int(11)" />
+    <field name="to_station_id" type="int(11)" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="trip_seat_detail">
+    <field name="id" type="bigint(20)" primary_key="yes" />
+    <field name="namespace_id" type="int(11)" />
+    <field name="trip_id" type="int(11)" />
+    <field name="trip_code" type="varchar(45)" />
+    <field name="trip_stage_code" type="varchar(45)" />
+    <field name="from_station_id" type="int(11)" />
+    <field name="to_station_id" type="int(11)" />
+    <field name="seat_gendar" type="tinyint(4)" />
+    <field name="seat_name" type="varchar(5)" />
+    <field name="seat_code" type="varchar(12)" />
+    <field name="ticketCode" type="varchar(12)" />
+    <field name="user_id" type="int(11)" />
+    <field name="phone_ticket_flag" type="tinyint(4)" />
+    <field name="ticket_status_id" type="int(11)" />
+    <field name="passenger_name" type="varchar(45)" />
+    <field name="passenger_age" type="int(11)" />
+    <field name="contact_number" type="varchar(15)" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+    <field name="boarding_point_name" type="varchar(100)" />
+  </table>
+  <table returnObjectType="multiple" name="user">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="code" type="varchar(12)" />
+    <field name="username" type="varchar(45)" />
+    <field name="namespace_id" type="int(11)" />
+    <field name="user_group_id" type="int(11)" />
+    <field name="organization_id" type="int(11)" />
+    <field name="user_lookup_id" type="int(11)" />
+    <field name="token" type="varchar(45)" />
+    <field name="email" type="varchar(45)" />
+    <field name="mobile" type="varchar(10)" />
+    <field name="first_name" type="varchar(45)" />
+    <field name="last_name" type="varchar(45)" />
+    <field name="api_token" type="varchar(65)" />
+    <field name="forget_token" type="varchar(60)" />
+    <field name="user_role_id" type="int(11)" />
+    <field name="email_verified" type="datetime" />
+    <field name="payment_type" type="tinyint(4)" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="user_address">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="code" type="varchar(12)" />
+    <field name="user_id" type="int(11)" />
+    <field name="station_id" type="int(11)" />
+    <field name="states_id" type="tinyint(4)" />
+    <field name="address1" type="varchar(60)" />
+    <field name="address2" type="varchar(60)" />
+    <field name="land_mark" type="varchar(45)" />
+    <field name="pin_code" type="varchar(6)" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="user_balance">
+    <field name="id" type="bigint(20)" primary_key="yes" />
+    <field name="user_id" type="int(11)" />
+    <field name="namespace_id" type="int(11)" />
+    <field name="user_transaction_id" type="bigint(20)" />
+    <field name="total_credit" type="decimal(10,2)" />
+    <field name="total_debit" type="decimal(10,2)" />
+    <field name="current_balance" type="decimal(10,2)" />
+    <field name="active_flag" type="tinyint(1)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="user_feedback">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="code" type="varchar(45)" />
+    <field name="namespace_id" type="int(11)" />
+    <field name="name" type="varchar(45)" />
+    <field name="email" type="varchar(45)" />
+    <field name="contact_number" type="varchar(20)" />
+    <field name="comments" type="text" />
+    <field name="feedback_at" type="datetime" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="user_group">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="code" type="varchar(12)" />
+    <field name="name" type="varchar(45)" />
+    <field name="description" type="varchar(80)" />
+    <field name="user_role_id" type="int(11)" />
+    <field name="namespace_id" type="int(11)" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="user_menu">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="code" type="varchar(12)" />
+    <field name="namespace_id" type="int(11)" />
+    <field name="menu_id" type="int(11)" />
+    <field name="refference_id" type="int(11)" />
+    <field name="refference_type" type="enum('NS','GR','UR')" />
+    <field name="active_event_codes" type="varchar(200)" />
+    <field name="menu_exception_flag" type="tinyint(4)" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="user_profile_notification">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="code" type="varchar(12)" />
+    <field name="name" type="varchar(45)" />
+    <field name="namespace_id" type="int(11)" />
+    <field name="message" type="text" />
+    <field name="active_from" type="date" />
+    <field name="active_to" type="date" />
+    <field name="comment_flag" type="tinyint(4)" />
+    <field name="refference_id" type="int(11)" />
+    <field name="refference_type" type="enum('GR','UR')" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="user_profile_notification_like">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="code" type="varchar(12)" />
+    <field name="user_id" type="int(11)" />
+    <field name="namespace_id" type="int(11)" />
+    <field name="user_profile_notification_id" type="int(11)" />
+    <field name="comments" type="varchar(80)" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="user_role">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="code" type="char(4)" />
+    <field name="name" type="varchar(45)" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="user_transaction">
+    <field name="id" type="bigint(20)" primary_key="yes" />
+    <field name="namespace_id" type="int(11)" />
+    <field name="user_id" type="int(11)" />
+    <field name="reference_id" type="int(11)" />
+    <field name="reference_code" type="varchar(12)" />
+    <field name="transaction_mode_id" type="int(11)" />
+    <field name="transaction_type_id" type="int(11)" />
+    <field name="transaction_amount" type="decimal(10,2)" />
+    <field name="credit_amount" type="decimal(10,2)" />
+    <field name="debit_amount" type="decimal(10,2)" />
+    <field name="service_tax" type="decimal(6,2)" />
+    <field name="tds" type="decimal(6,2)" />
+    <field name="closing_balance_amount" type="decimal(10,2)" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="created_by" type="int(11)" />
+    <field name="created_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="user_widgets">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="code" type="varchar(12)" />
+    <field name="widgets_id" type="int(11)" />
+    <field name="namespace_id" type="int(11)" />
+    <field name="user_group_id" type="int(11)" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+  <table returnObjectType="multiple" name="widgets">
+    <field name="id" type="int(11)" primary_key="yes" />
+    <field name="code" type="varchar(12)" />
+    <field name="name" type="varchar(45)" />
+    <field name="calback_function" type="varchar(45)" />
+    <field name="active_flag" type="tinyint(4)" />
+    <field name="updated_by" type="int(11)" />
+    <field name="updated_at" type="datetime" />
+  </table>
+</schema>

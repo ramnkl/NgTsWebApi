@@ -1,0 +1,273 @@
+﻿<#@ IntelliSenseLanguage processor="tangibleT4Editor" language="C#" #>
+<#@ include file="Common.ttinclude" #>
+//Write a class
+
+
+<#+
+
+private void CreateEzeeSP(dynamic table)
+{ 
+
+//Method generated 
+Write("DROP PROCEDURE IF EXISTS EZEE_SP_");
+Write( table.name);
+WriteLine("_IUD");
+WriteLine( "DELIMITER $$");
+Write("CREATE PROCEDURE EZEE_SP_");
+Write(table.name);
+WriteLine("_IUD");
+WriteLine("(");
+PushIndent("\t");
+var fields= table["field"];
+
+int count  = 0;
+foreach(var param in fields )
+{
+ if(param.primary_key.ToString()=="yes" )
+ {
+ count++;
+ }
+ else
+ {
+ if(param.name =="code")
+ {
+ Write("OUT ");
+ }
+ else
+ {
+
+ }
+
+
+ Write("p");
+ Write (param.name);
+ Write (" ");
+
+string[] str= param.type.Split('('); 
+if(str[0].ToString()=="varchar")
+{
+WriteLine(param.type.ToUpper());
+}
+else if(str[0].ToString()=="enum")
+{
+WriteLine("TINYINT");
+}
+else
+{
+
+WriteLine (str[0].ToUpper());  
+}
+ if(count < fields.Count-1)
+Write(",");
+ count++;
+ }
+}
+Write(", OUT pitRowCount INT");
+WriteLine(")");
+PopIndent();
+
+WriteLine(" /* ");
+Write("* Procedure Name    : EZEE_SP_");
+Write( table.name);
+WriteLine("_IUD");
+WriteLine("* ");
+Write("* Purpose       : Insert /Update /Delete");
+Write(table.name);
+WriteLine(" Table ");
+WriteLine("*");
+WriteLine("* Input        : None");
+WriteLine("*");
+WriteLine("* Output        : ");
+WriteLine("* 						 Affected Rows");
+WriteLine("*");
+WriteLine("* Returns       : None");
+WriteLine("*");
+WriteLine("* Dependencies");
+WriteLine("*");
+Write("*   Tables      : ");
+WriteLine( table.name);
+WriteLine("*");
+WriteLine("*   Functions    : None");
+WriteLine("*");
+WriteLine("*   Procedures    : EZEE_SP_SEQUENCE_GENERATOR");
+WriteLine("*");
+WriteLine("* Revision History:");
+WriteLine("*");
+WriteLine("*  ");
+WriteLine("*");
+WriteLine("*----------------------------------------------------------------------------------------------------");
+WriteLine("* Variable Declare");
+WriteLine("*-----------------------------------------------------------------------------------------------------");
+	
+	
+	
+WriteLine("*-----------------------------------------------------------------------------------------------------");
+WriteLine("*/");
+
+ WriteLine("BEGIN");
+ WriteLine("/*");
+WriteLine("*-----------------------------------------------------------------------------------------------------");
+WriteLine("* Variable Initialized");
+WriteLine("*------------------------------------------------------------------------------------------------------");
+WriteLine("*/");
+WriteLine("SET	pitRowCount  = 0;");
+WriteLine("/*");
+WriteLine("*-----------------------------------------------------------------------------------------------------");
+WriteLine("*/");
+WriteLine("/* -------------------------------------------------------------------------------------*/");
+WriteLine("/* UPDATE TABLE SCRIPTS */");
+WriteLine("/* ------------------------------------------------------------------------------------- */");
+
+WriteLine("/* -------------------------------------------------------------------------------------");
+Write("/");
+Write( table.name);
+WriteLine(" Update");
+WriteLine("  -------------------------------------------------------------------------------------");
+WriteLine("   */ ");
+
+WriteLine("IF (pactive_flag = 1 AND EZEE_FN_ISNOTNULL(pcode)  ) THEN");
+PushIndent("\t");
+Write("UPDATE ");
+WriteLine( table.name);
+WriteLine("SET");
+PushIndent("\t"); 
+ 	count=0;
+	foreach (var f in  fields)
+	{
+	if(f.primary_key.ToString()=="yes" )
+ {
+ count++;
+ }
+ else
+ {
+ 	
+	if(f.name == "code" || f.name == "value" )
+	{
+	Write("`");
+	Write (f.name);
+	Write("`");
+	}
+	else
+ 
+ Write (f.name);
+ 
+ Write (" ");
+ Write ("=");
+ Write (" ");
+	Write("p");
+ Write (f.name);
+ 
+ if(count <fields.Count-1 )
+ WriteLine (",");
+ 
+ count++;
+ 
+	}}  
+
+PopIndent();
+WriteLine(" where `code`=pcode  ");
+	foreach (var f in  fields)
+	{
+	
+	if(f.name=="namespace_id" )
+	{
+	WriteLine(" and namespace_id = pnamespace_id");
+	}
+	
+	}
+	
+	
+PopIndent();
+ WriteLine(	"SELECT ROW_COUNT() INTO pitRowCount;");
+
+WriteLine( "/* -------------------------------------------------------------------------------------*/");
+WriteLine( "/* INSERT TABLE SCRIPTS */");
+WriteLine( "/* ------------------------------------------------------------------------------------- */");
+
+WriteLine(" ELSEIF (pactive_flag = 1 AND EZEE_FN_ISNULL(pcode) ) THEN");
+
+Write("INSERT INTO");
+WriteLine( table.name);
+WriteLine("(");
+	PushIndent("\t");
+	count=0;
+	foreach (var f in  fields)
+	{
+	if(f.primary_key.ToString()=="yes" )
+ {
+ count++;
+ }
+ else
+ {
+if(f.name == "code" || f.name == "value" )
+	{
+	Write("`");
+	Write(f.name);
+	WriteLine("`");
+
+	}
+	else
+ 
+ WriteLine (f.name);
+ 
+ Write (" ");
+  if(count <fields.Count-1 )
+ Write (",");
+ 
+ count++;
+ 
+	}}
+	PopIndent();
+WriteLine(")");
+WriteLine(	"VALUES(");
+	 
+	count=0;
+	PushIndent("\t");
+	foreach (var f in  fields)
+	{
+	if(f.primary_key.ToString()=="yes" )
+ {
+ count++;
+ }
+ else
+ {
+	
+	Write ("p");
+ WriteLine (f.name);
+ 
+ Write (" ");
+  if(count <fields.Count-1 )
+ Write (",");
+ 
+ count++;
+ 
+	}} 
+	PopIndent();
+Write(");");
+WriteLine("SELECT ROW_COUNT() INTO pitRowCount;");
+WriteLine("	/* -------------------------------------------------------------------------------------*/");
+WriteLine("/* DELETE TABLE SCRIPTS */");
+WriteLine("/* ------------------------------------------------------------------------------------- */");
+
+WriteLine("/* -------------------------------------------------------------------------------------");
+WriteLine("/    "+  table.name +  " DELETE");
+WriteLine("  -------------------------------------------------------------------------------------  */");
+WriteLine("  	ELSEIF (pactive_flag != 1 AND EZEE_FN_ISNOTNULL(pcode)) THEN");
+WriteLine("IF (pactive_flag = 9) THEN");
+PushIndent("\t");
+WriteLine("SET pactive_flag = 1;");
+	PopIndent();
+WriteLine("END IF;");
+WriteLine("UPDATE " + table.name +" SET active_flag = pactive_flag, updated_by = pupdated_by, updated_at = now() WHERE `code` = pcode;");
+WriteLine("SELECT ROW_COUNT() INTO pitRowCount;");
+WriteLine("END IF;");
+
+WriteLine("END$$");
+
+WriteLine( "DELIMITER ;	");
+}
+
+
+#>
+
+

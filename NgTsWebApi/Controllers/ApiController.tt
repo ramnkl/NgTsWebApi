@@ -1,0 +1,36 @@
+﻿<#@ template debug="true" hostspecific="true" language="C#" #>
+<#@ include file="..\..\NgTs.DataAccess\Templates\ApiController.ttinclude" #><#@ output extension=".cs" #>
+
+<#
+
+	var hostServiceProvider = (IServiceProvider)Host;
+var dte = 
+    (EnvDTE.DTE)hostServiceProvider.GetService(typeof(EnvDTE.DTE));
+var activeSolutionProjects = (Array)dte.ActiveSolutionProjects;
+var dteProject = (EnvDTE.Project)activeSolutionProjects.GetValue(0);
+ var defaultNamespace = dteProject.Properties.Item("DefaultNamespace").Value;
+
+
+var manager = TemplateFileManager.Create(this);
+var model=FromFile(@"..\..\NgTs.DataAccess\Templates\models.xml");
+foreach(var c in model["table"]) 
+	{ //get all classes	
+	manager.StartNewFile(GetLetterCase( c.name, false) +".Factory.cs");
+#>
+ 
+// This auto genrated code please donot alter  <#=  DateTime.Now #>
+<#
+WriteLine ("System;");
+	WriteLine ("System.Net;");
+	WriteLine("System.Net.Http;");
+	WriteLine("using NgTs.Entities;");
+	WriteLine("using System.Collections.Generic;");
+
+    WriteLine (string .Format("namespace {0}", defaultNamespace	));
+	WriteLine("{");
+	
+		CreateApiController( c);
+			WriteLine ("}");
+    }
+	manager.Process();
+#>

@@ -1,0 +1,15 @@
+﻿<#@ template debug="true" hostspecific="true" language="C#" #>
+<#@ include file="ezeesp.ttinclude" #><#@ output extension=".sql" #>
+
+<#
+
+var manager = TemplateFileManager.Create(this);
+var model=FromFile("Report.xml");
+foreach(var c in model["table"]) 
+	{ //get all classes
+	manager.StartNewFile(c.name+".sql");
+	CreateEzeeSP(c);
+    }
+	manager.Process();
+
+#>

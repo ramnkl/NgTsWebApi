@@ -1,0 +1,56 @@
+﻿<#@ template debug="true" hostspecific="true" language="C#" #>
+<#@ include file="..\templates\Factory.ttinclude" #><#@ output extension=".cs" #>
+
+<#
+
+	var hostServiceProvider = (IServiceProvider)Host;
+var dte = 
+    (EnvDTE.DTE)hostServiceProvider.GetService(typeof(EnvDTE.DTE));
+var activeSolutionProjects = (Array)dte.ActiveSolutionProjects;
+var dteProject = (EnvDTE.Project)activeSolutionProjects.GetValue(0);
+ var defaultNamespace = dteProject.Properties.Item("DefaultNamespace").Value;
+
+
+var manager = TemplateFileManager.Create(this);
+var model=FromFile("Models.xml");
+foreach(var c in model["table"]) 
+	{ //get all classes	
+	manager.StartNewFile(GetLetterCase( c.name, false) +".Factory.cs");
+#>
+ 
+// This auto genrated code please donot alter  <#=  DateTime.Now #>
+<#
+	WriteLine ("using System.Data;");
+	WriteLine ("using System.Data.Common;");
+	WriteLine ("using Microsoft.Practices.EnterpriseLibrary.Data;");
+	WriteLine("using NgTs.DataAccess.Generic;");
+	WriteLine("using NgTs.Entities;");
+	WriteLine("using System.Collections.Generic;");
+    WriteLine (string .Format("namespace {0}", defaultNamespace	));
+	WriteLine("{");
+	InsertFactory(c);
+	UpdateFactory(c);
+	DeleteFactory(c);
+	CreateGetAllFromSelectFactory(c);
+	GetByIdSelectFactory(c);
+	
+	WriteLine ("}");
+    
+	manager.StartNewFile(GetLetterCase( c.name, false) +".GetAll.cs");
+	WriteLine ("using System.Data;");
+	WriteLine ("using System.Data.Common;");
+	WriteLine ("using Microsoft.Practices.EnterpriseLibrary.Data;");
+	WriteLine("using NgTs.DataAccess.Generic;");
+	WriteLine("using NgTs.Entities;");
+	WriteLine("using System.Collections.Generic;");
+    WriteLine (string .Format("namespace {0}", defaultNamespace	));
+	WriteLine("{");
+	CreateGetAll(c);
+	ConstructReaderForSelectAll(c);
+	
+	WriteLine ("}");
+
+
+    }
+	manager.Process();
+#>

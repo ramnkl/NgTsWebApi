@@ -1,0 +1,111 @@
+﻿<#@ IntelliSenseLanguage processor="tangibleT4Editor" language="C#" #>
+<#@ include file="common.ttinclude"  #>
+<#@ output extension=".java" #>
+
+<#+ 
+//Create an elastic object
+
+private string  GetQuestionMark (dynamic table)
+{
+StringBuilder sb  =  new StringBuilder();
+int pos=0;
+foreach(var f in table["field"])
+{
+
+if(pos < table["field"].Count-1)
+sb.Append("?,");
+else
+sb.Append("?");
+
+pos++;
+}
+
+return sb.ToString();
+}
+
+private void WriteRowCount(dynamic table)
+{
+
+foreach(var f in table["field"])
+{
+if(f.name=="pRowCount")
+{
+WriteLine("if (callableStatement.getInt(\"pRowCount\") > 0) {");
+Write(GetCamelCase(table.name)+"DTO");
+Write(".setCode(callableStatement.getString(\"pCode\"));");
+			
+}
+}
+}
+
+private string GetReturnType(string objectType,string tableName)
+{
+string returnType=GetProperCase(tableName)+"DTO";;
+
+if(objectType!=null)
+{
+
+ if(objectType=="multiple")
+{
+returnType="List<"+GetProperCase(tableName)+">"+"DTO";
+}
+else
+{
+returnType=GetProperCase(tableName)+"DTO";
+}
+
+}
+
+
+return returnType;
+
+}
+
+//Write a class
+private void CreateDAOClass(dynamic c)
+{
+PushIndent ("\t");
+ 
+#>
+//Method generated 
+public  <#= GetReturnType(c.returnObjectType,c.name)#>    get<#= GetProperCase(c.name) #>IUD(AuthDTO authDTO,<#= GetProperCase(c.name) #>DTO <#= GetCamelCase(c.name) #>DTO){
+<#+ PushIndent("\t");  #>
+try {
+	<#+ PushIndent("\t");  #>
+			@Cleanup
+			Connection connection = ConnectDAO.getConnection();
+			int pindex = 0;
+
+			@Cleanup
+			CallableStatement callableStatement = connection.prepareCall("{call   EZEE_SP_<#= c.name.ToString().ToUpper() #>_IUD(<#= GetQuestionMark(c) #>)}");
+			<#+
+			foreach (var member in c["field"])
+    {
+	 Write("callableStatement.set");
+	 Write(GetCSharpDataType(member.type));
+	 Write("(++pindex,");
+	 Write(GetCamelCase(c.name)+"DTO");
+	 Write(".get"+GetProperCase(member.name));
+	 WriteLine(");");
+	}
+WriteLine("callableStatement.execute();");		
+
+//Write("sdfsdf");
+			
+ WriteRowCount(c);			
+	PopIndent();		
+			#>
+			
+		}
+		catch (Exception e) {
+			throw new ServiceException(e.getMessage());
+		}
+		return null;
+	}
+<#+	PopIndent(); #>
+
+<#+
+PopIndent();
+}
+
+#>

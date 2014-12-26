@@ -1,0 +1,2 @@
+Msg 2714, Level 16, State 6, Server RAMACHANDRAN_D\MSSQLSERVER_14, Line 4
+There is already an object named 'UserInfo' in the database.

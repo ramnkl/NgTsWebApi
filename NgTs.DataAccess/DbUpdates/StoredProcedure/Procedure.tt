@@ -1,0 +1,27 @@
+﻿<#@ template debug="true" hostspecific="true" language="C#" #>
+<#@ include file="..\..\Templates\CRUD.ttinclude" #><#@ output extension=".Bat" #>
+
+<#
+var manager = TemplateFileManager.Create(this);
+var model=FromFile(@"..\..\model\models.xml");
+foreach(var table in model["table"]) 
+{	
+	WriteLine(string.Format(@"sqlcmd -S %SName% -U %UName% -P %Pwd% -d %DbName% -I -i %Opath%\StoredProcedure\{0}.InsertSP.sql -o %Opath%\Error\StoredProcedure\{0}.InertSP.sql.err", GetLetterCase( table.name, false)));
+}	
+foreach(var c in model["table"]) 
+	{ //get all classes	
+	manager.StartNewFile(GetLetterCase( c.name, false) +".InsertSP.sql");
+#>
+ 
+--This auto genrated code please do not alter  <#=  DateTime.Now #>
+<#
+	CreateInsertSP(c);
+	WriteLine("GO");
+	CreateUpdateSP(c);
+	WriteLine("GO");
+	CreateSelectAllSP(c);
+	WriteLine("GO");
+	CreateGetByIdSP(c);
+	}
+	manager.Process();
+#>

@@ -1,0 +1,9 @@
+﻿<#@ template debug="true" hostspecific="true" language="C#" #>
+<#@ include file="dao.ttInclude" #>
+<#
+var model=FromFile("Report.xml");
+foreach(var c in model["table"])  //get all classes
+	CreateDAOClass(c);
+
+#>
+

@@ -1,0 +1,14 @@
+﻿
+
+// <summary file="$filename$" company="...">
+// some text...
+// </summary>
+
+//-> SimpleClass1.cs
+
+//-> SimpleClass2.cs
+
+//-> SimpleClass3.cs
+
+//-> SimpleClass4.cs
+

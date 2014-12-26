@@ -1,0 +1,191 @@
+﻿<#@ IntelliSenseLanguage processor="tangibleT4Editor" language="C#" #>
+<#@ include file="Common.ttinclude" #>
+
+
+
+
+
+<#+ 
+
+private void CreateTable(dynamic table)
+{
+
+WriteLine( "--Table Creation");
+//Create class 
+WriteLine( string.Format( "CREATE TABLE {0} (", table.name));
+PushIndent("\t");	
+foreach  (dynamic field in table["field"])
+{
+WriteLine( string.Format( "\"{0}\" {1}," , field.name, field.type));
+}
+var pk =  GetPrimaryField(table);
+if (pk !=  null)
+{
+WriteLine("CONSTRAINT \"PK_{0}\" PRIMARY KEY  CLUSTERED",  table.name);
+WriteLine(string.Format( "( {0} )", GetPrimaryField(table).name));
+}
+PopIndent();
+WriteLine(")");
+
+}
+
+private void CreateInsertSP(dynamic table)
+{
+
+WriteLine( "--SP Generation");
+WriteLine(string.Format (" IF  EXISTS ( SELECT 'X' FROM SYSOBJECTS WHERE Xtype='P' AND  NAME ='{0}Insert')" , table.name));
+WriteLine ("BEGIN");
+WriteLine ( string.Format( "DROP PROCEDURE {0}Insert", table.name));  
+WriteLine ( "END");
+WriteLine ( "GO");
+var fields= table["field"];
+
+WriteLine ( string.Format( "CREATE PROCEDURE {0}Insert", table.name));
+WriteLine ( "(");
+int idx  = 0;
+foreach  (dynamic field in fields)
+{
+WriteLine ( string.Format( "@{0} {1} {2}", field.name, field.type, (++idx != fields.Count )? ",":""));
+}
+WriteLine ( ")");
+WriteLine ( "AS");
+WriteLine ( "BEGIN");
+WriteLine (string.Format( "INSERT INTO {0} (", table.name));
+idx  = 0;
+PushIndent("\t");	
+foreach  (dynamic field in fields)
+{
+WriteLine ( string.Format( "[{0}]{2}", field.name, field.type, (++idx != fields.Count )? ",":""));
+}
+PopIndent();
+WriteLine ( ")");
+WriteLine("Values (");
+idx  = 0;
+PushIndent("\t");	
+foreach  (dynamic field in fields)
+{
+WriteLine ( string.Format( "@{0}{2}", field.name, field.type, (++idx != fields.Count )? ",":""));
+}
+PopIndent();
+WriteLine ( ")");
+WriteLine ( "END");
+
+ 
+
+
+}
+
+
+private void CreateUpdateSP(dynamic table)
+{
+
+
+dynamic  primaryKey= GetPrimaryField(table);
+string primaryKeyName = "No primary found";
+if  (primaryKey !=  null)
+primaryKeyName = (string) primaryKey.name;
+
+
+
+WriteLine( string.Format( "--Auto generated for Update sp {0}", DateTime.Now));
+WriteLine(string.Format (" IF  EXISTS ( SELECT 'X' FROM SYSOBJECTS WHERE Xtype='P' AND  NAME ='{0}Update')" , table.name));
+WriteLine ("BEGIN");
+WriteLine ( string.Format( "DROP PROCEDURE {0}Update", table.name));  
+WriteLine ( "END");
+WriteLine ( "GO");
+var fields= table["field"];
+
+WriteLine ( string.Format( "CREATE PROCEDURE {0}Update", table.name));
+WriteLine ( "(");
+int idx  = 0;
+foreach  (dynamic field in fields)
+{
+WriteLine ( string.Format( "@{0} {1} {2}", field.name, field.type, (++idx != fields.Count )? ",":""));
+}
+WriteLine ( ")");
+WriteLine ( "AS");
+WriteLine ( "BEGIN");
+WriteLine (string.Format( "UPDATE   [{0}] SET ", table.name));
+idx  = 0;
+PushIndent("\t");	
+foreach  (dynamic field in fields)
+{
+WriteLine ( string.Format( "[{0}]=@{0}{1}", field.name,  (++idx != fields.Count )? ",":""));
+}
+PopIndent();
+
+WriteLine ( string.Format("WHERE [{0}] = @{0}", GetLetterCase(primaryKeyName,false)) );
+WriteLine ( "END");
+
+}
+
+
+
+private void CreateSelectAllSP(dynamic table)
+{
+
+WriteLine( string.Format( "--Auto generated for Update sp {0}", DateTime.Now));
+WriteLine(string.Format (" IF  EXISTS ( SELECT 'X' FROM SYSOBJECTS WHERE Xtype='P' AND  NAME ='{0}GetAll')" , table.name));
+WriteLine ("BEGIN");
+WriteLine ( string.Format( "DROP PROCEDURE {0}GetAll", table.name));  
+WriteLine ( "END");
+WriteLine ( "GO");
+var fields= table["field"];
+
+WriteLine ( string.Format( "CREATE PROCEDURE {0}GetAll", table.name));
+WriteLine ( "AS");
+WriteLine ( "BEGIN");
+WriteLine (string.Format( "SELECT ", table.name));
+int idx  = 0;
+PushIndent("\t");	
+foreach  (dynamic field in fields)
+{
+WriteLine ( string.Format( "[{0}]{1}", field.name,  (++idx != fields.Count )? ",":""));
+}
+PopIndent();
+WriteLine ( string.Format("FROM [{0}]", GetLetterCase(table.name,false)) );
+WriteLine ( "END");
+}
+
+
+private void CreateGetByIdSP(dynamic table)
+{
+
+
+dynamic  primaryKey= GetPrimaryField(table);
+string primaryKeyName = "No primary found";
+if  (primaryKey !=  null)
+primaryKeyName = (string) primaryKey.name;
+
+
+
+WriteLine( string.Format( "--Auto generated for get by Id sp {0}", DateTime.Now));
+WriteLine(string.Format (" IF  EXISTS ( SELECT 'X' FROM SYSOBJECTS WHERE Xtype='P' AND  NAME ='{0}LoadBy{1}')" , table.name, primaryKeyName));
+WriteLine ("BEGIN");
+WriteLine ( string.Format( "DROP PROCEDURE {0}LoadBy{1}" , table.name, primaryKeyName));  
+WriteLine ( "END");
+WriteLine ( "GO");
+var fields= table["field"];
+
+WriteLine ( string.Format( "CREATE PROCEDURE {0}LoadBy{1}" , table.name, primaryKeyName));  
+WriteLine ( "(");
+WriteLine ( string.Format( "@{0} {1}", primaryKeyName, primaryKey.type ));
+
+WriteLine ( ")");
+WriteLine ( "AS");
+WriteLine ( "BEGIN");
+WriteLine ( "SELECT");
+int idx  = 0;
+PushIndent("\t");	
+foreach  (dynamic field in fields)
+{
+WriteLine ( string.Format( "[{0}]{1}", field.name,  (++idx != fields.Count )? ",":""));
+}
+PopIndent();
+WriteLine ( string.Format("FROM [{0}]", GetLetterCase(table.name,false)) );
+WriteLine ( string.Format("WHERE [{0}] = @{0}", GetLetterCase(primaryKeyName,false)) );
+WriteLine ( "END");
+
+}
+
+#>

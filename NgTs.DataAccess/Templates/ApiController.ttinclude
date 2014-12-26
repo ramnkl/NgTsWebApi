@@ -1,0 +1,18 @@
+﻿<#@ IntelliSenseLanguage processor="tangibleT4Editor" language="C#" #>
+<#@ include file="Common.ttinclude" #>
+
+
+
+
+<#+ 
+
+private void CreateApiController(dynamic table)
+{ 
+WriteLine("#region  controller");
+WriteLine(string.Format("public class {0}Controller : ApiController", GetLetterCase(table.name, false)));
+WriteLine(string.Format( "static readonly IProductRepository repository = new ProductRepository();", GetLetterCase(table.name, false)));
+WriteLine(string.Format( "static readonly IProductRepository repository = new ProductRepository();", GetLetterCase(table.name, false)));
+
+
+}
+#>

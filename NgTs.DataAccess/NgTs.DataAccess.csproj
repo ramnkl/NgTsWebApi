@@ -1,0 +1,249 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{8077390D-DBDA-4C0F-BE68-6B223EE2A59F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NgTs.DataAccess</RootNamespace>
+    <AssemblyName>NgTs.DataAccess</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AmazedSaint.Elastic">
+      <HintPath>..\packages\AmazedSaint.ElasticObject.1.2.0\lib\net40\AmazedSaint.Elastic.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Caching">
+      <HintPath>..\packages\EntLib.3.1.0.0\lib\net20\Microsoft.Practices.EnterpriseLibrary.Caching.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common">
+      <HintPath>..\packages\EntLib.3.1.0.0\lib\net20\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Data">
+      <HintPath>..\packages\EntLib.3.1.0.0\lib\net20\Microsoft.Practices.EnterpriseLibrary.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.ExceptionHandling">
+      <HintPath>..\packages\EntLib.3.1.0.0\lib\net20\Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.Logging">
+      <HintPath>..\packages\EntLib.3.1.0.0\lib\net20\Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Logging">
+      <HintPath>..\packages\EntLib.3.1.0.0\lib\net20\Microsoft.Practices.EnterpriseLibrary.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ObjectBuilder">
+      <HintPath>..\packages\EntLib.3.1.0.0\lib\net20\Microsoft.Practices.ObjectBuilder.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ElasticDemoModel\ElasticDemoGen.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ElasticDemoGen.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Generic\Generic.cs" />
+    <Compile Include="Generic\IDbToBusinessEntityNameMapper.cs" />
+    <Compile Include="Generic\IDeleteFactory.cs" />
+    <Compile Include="Generic\IDomainObjectFactory.cs" />
+    <Compile Include="Generic\IInsertFactory.cs" />
+    <Compile Include="Generic\IIOSelectionFactory.cs" />
+    <Compile Include="Generic\ISelectionFactory.cs" />
+    <Compile Include="Generic\IUpdateFactory.cs" />
+    <Compile Include="Generic\NullableIdentity.cs" />
+    <Compile Include="Generic\Repository.cs" />
+    <Compile Include="Generic\RepositoryException.cs" />
+    <Compile Include="Generic\RepositoryFailureException.cs" />
+    <Compile Include="Generic\RepositoryValidationException.cs" />
+    <Compile Include="PlatformConfig.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Model\Factory.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Factory.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\NgTsUser.Factory.cs">
+      <DependentUpon>Factory.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\NgTsUser.GetAll.cs">
+      <DependentUpon>Factory.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Product.Factory.cs">
+      <DependentUpon>Factory.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Product.GetAll.cs">
+      <DependentUpon>Factory.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TestFolder\SimpleClass1.cs">
+      <DependentUpon>SimpleSample.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="TestFolder\SimpleClass2.cs">
+      <DependentUpon>SimpleSample.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="TestFolder\SimpleClass3.cs">
+      <DependentUpon>SimpleSample.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="TestFolder\SimpleClass4.cs">
+      <DependentUpon>SimpleSample.txt4</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="DbUpdates\DbUpdate.bat" />
+    <None Include="DbUpdates\Function\Function.bat" />
+    <None Include="DbUpdates\Index\Index.bat" />
+    <None Include="DbUpdates\MetaData\Metadata.bat" />
+    <None Include="DbUpdates\StoredProcedure\Procedure.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Procedure.Bat</LastGenOutput>
+    </None>
+    <None Include="DbUpdates\StoredProcedure\Procedure.Bat">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Procedure.tt</DependentUpon>
+    </None>
+    <None Include="DbUpdates\Table\Table.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Table.bat</LastGenOutput>
+    </None>
+    <None Include="DbUpdates\Table\Table.bat">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Table.tt</DependentUpon>
+    </None>
+    <None Include="DbUpdates\View\View.bat" />
+    <None Include="ElasticDemoModel\ElasticDemoGen.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ElasticDemoGen.cs</LastGenOutput>
+    </None>
+    <None Include="packages.config" />
+    <None Include="SimpleParameterTemplate.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>SimpleParameterTemplate.txt</LastGenOutput>
+    </None>
+    <None Include="SimpleSample.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>SimpleSample.txt</LastGenOutput>
+    </None>
+    <None Include="Templates\ApiController.ttinclude" />
+    <None Include="Templates\Common.ttinclude" />
+    <None Include="Templates\CRUD.ttinclude" />
+    <None Include="Templates\DAO.ttinclude" />
+    <None Include="Templates\EzeeCRUD.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>EzeeCRUD.sql</LastGenOutput>
+    </None>
+    <None Include="Templates\Ezeesp.ttinclude" />
+    <None Include="Model\Factory.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Factory.cs</LastGenOutput>
+    </None>
+    <None Include="Templates\Factory.ttinclude" />
+    <None Include="Templates\JsonModel.ttinclude" />
+    <None Include="Templates\ReportDAO.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ReportDAO.java</LastGenOutput>
+    </None>
+    <None Include="TestFolder\SimpleSample.txt4" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DbUpdates\Function\Test.sql" />
+    <Content Include="DbUpdates\Index\Indexes.sql" />
+    <Content Include="DbUpdates\MetaData\MetaData.sql" />
+    <Content Include="DbUpdates\StoredProcedure\NgTsUser.InsertSP.sql">
+      <DependentUpon>Procedure.tt</DependentUpon>
+    </Content>
+    <Content Include="DbUpdates\StoredProcedure\Product.InsertSP.sql">
+      <DependentUpon>Procedure.tt</DependentUpon>
+    </Content>
+    <Content Include="DbUpdates\Table\NgTsUser.table.sql">
+      <DependentUpon>Table.tt</DependentUpon>
+    </Content>
+    <Content Include="DbUpdates\Table\Product.table.sql">
+      <DependentUpon>Table.tt</DependentUpon>
+    </Content>
+    <Content Include="DbUpdates\View\Test_vw.SQL" />
+    <Content Include="ElasticDemoModel\ElasticDemoModel.xml" />
+    <Content Include="ElasticDemoModel\ReadMe-ElasticObject.cs.txt" />
+    <Content Include="SimpleParameterTemplate.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SimpleParameterTemplate.tt</DependentUpon>
+    </Content>
+    <Content Include="SimpleSample.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SimpleSample.tt</DependentUpon>
+    </Content>
+    <Content Include="Templates\EzeeCRUD.sql">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EzeeCRUD.tt</DependentUpon>
+    </Content>
+    <Content Include="Templates\NgTsUser.sql">
+      <DependentUpon>EzeeCRUD.tt</DependentUpon>
+    </Content>
+    <Content Include="Templates\Product.sql">
+      <DependentUpon>EzeeCRUD.tt</DependentUpon>
+    </Content>
+    <Content Include="Templates\Report - Copy.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Model\Models.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Templates\ReportDAO.java">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ReportDAO.tt</DependentUpon>
+    </Content>
+    <Content Include="TestFolder\ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="CodeTemplates\" />
+    <Folder Include="DbUpdates\Error\Functions\" />
+    <Folder Include="DbUpdates\Error\Indexes\" />
+    <Folder Include="DbUpdates\Error\MetaData\" />
+    <Folder Include="DbUpdates\Error\StoredProcedures\" />
+    <Folder Include="DbUpdates\Error\Tables\" />
+    <Folder Include="DbUpdates\Error\Views\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NgTs.Entities\NgTs.Entity.csproj">
+      <Project>{f09de9cb-dff8-4074-83b0-781147a406f7}</Project>
+      <Name>NgTs.Entity</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
