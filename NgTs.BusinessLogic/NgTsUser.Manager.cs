@@ -40,7 +40,11 @@ namespace NgTs.BusinessLogic
 		}
 	public NgTsUser GetNgTsUser(long userid)
 		{
-		return _GetLong(userid);
+		return _GetNgTsUser(userid);
+		}
+	public List<NgTsUser> GetAll()
+		{
+		return _GetAll();
 		}
 	private NgTsUserRepository _RepNgTsUser;
 	protected NgTsUserRepository RepNgTsUser
@@ -93,6 +97,15 @@ namespace NgTs.BusinessLogic
 			//throw new NgTsException(NgTsErrorCode.ErruseridInvalid, StringRes.ErruseridInvalid(UserId));
 			}
 		return ngtsuser;
+		}
+	private List<NgTsUser> _GetAll()
+		{
+		List<NgTsUser> list = this.RepNgTsUser.GetAllFromNgTsUser();
+		if (null ==  list)
+			{
+			//throw new NgTsException(NgTsErrorCode.ErruseridInvalid, StringRes.ErruseridInvalid(UserId));
+			}
+		return list;
 		}
 	}
 #endregion

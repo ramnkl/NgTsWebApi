@@ -1,5 +1,5 @@
 ﻿<#@ template debug="true" hostspecific="true" language="C#" #>
-<#@ include file="..\..\templates\CRUD.ttinclude" #><#@ output extension=".bat" #>
+<#@ include file="..\..\T4Templates\CRUD.ttinclude" #><#@ output extension=".bat" #>
 
 <#
 var manager = TemplateFileManager.Create(this);

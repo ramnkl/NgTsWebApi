@@ -1,5 +1,5 @@
 ﻿ 
---This auto genrated code please do not alter  12/25/2014 18:56:10
+--This auto genrated code please do not alter  12/26/2014 11:01:57
 --SP Generation
  IF  EXISTS ( SELECT 'X' FROM SYSOBJECTS WHERE Xtype='P' AND  NAME ='NgTsUserInsert')
 BEGIN
@@ -35,7 +35,7 @@ Values (
 )
 END
 GO
---Auto generated for Update sp 12/25/2014 6:56:10 PM
+--Auto generated for Update sp 12/26/2014 11:01:57 AM
  IF  EXISTS ( SELECT 'X' FROM SYSOBJECTS WHERE Xtype='P' AND  NAME ='NgTsUserUpdate')
 BEGIN
 DROP PROCEDURE NgTsUserUpdate
@@ -62,7 +62,7 @@ UPDATE   [NgTsUser] SET
 WHERE [UserId] = @UserId
 END
 GO
---Auto generated for Update sp 12/25/2014 6:56:10 PM
+--Auto generated for Update sp 12/26/2014 11:01:57 AM
  IF  EXISTS ( SELECT 'X' FROM SYSOBJECTS WHERE Xtype='P' AND  NAME ='NgTsUserGetAll')
 BEGIN
 DROP PROCEDURE NgTsUserGetAll
@@ -81,7 +81,7 @@ SELECT
 FROM [NgTsUser]
 END
 GO
---Auto generated for get by Id sp 12/25/2014 6:56:10 PM
+--Auto generated for get by Id sp 12/26/2014 11:01:57 AM
  IF  EXISTS ( SELECT 'X' FROM SYSOBJECTS WHERE Xtype='P' AND  NAME ='NgTsUserLoadByUserId')
 BEGIN
 DROP PROCEDURE NgTsUserLoadByUserId

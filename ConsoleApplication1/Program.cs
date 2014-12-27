@@ -17,8 +17,10 @@ namespace ConsoleApplication1
             u.LastName = "lastn";
             u.Password = "p";
             u.UserCode = "usercode";
+           //mgr.GetNgTsUser()
             mgr.CreateNgTsUser(u);
             
+            mgr.GetAll();
 
         }
     }

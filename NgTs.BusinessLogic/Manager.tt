@@ -1,5 +1,5 @@
 ﻿<#@ template debug="true" hostspecific="true" language="C#" #>
-<#@ include file="..\NgTs.DataAccess\Templates\Factory.ttinclude" #>
+<#@ include file="..\NgTs.DataAccess\T4Templates\Factory.ttinclude" #>
 <#@ output extension=".cs" #>
 
 <#

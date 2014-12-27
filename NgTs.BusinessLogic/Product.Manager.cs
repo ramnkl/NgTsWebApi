@@ -40,7 +40,11 @@ namespace NgTs.BusinessLogic
 		}
 	public Product GetProduct(long productid)
 		{
-		return _GetLong(productid);
+		return _GetProduct(productid);
+		}
+	public List<Product> GetAll()
+		{
+		return _GetAll();
 		}
 	private ProductRepository _RepProduct;
 	protected ProductRepository RepProduct
@@ -93,6 +97,15 @@ namespace NgTs.BusinessLogic
 			//throw new NgTsException(NgTsErrorCode.ErrproductidInvalid, StringRes.ErrproductidInvalid(ProductId));
 			}
 		return product;
+		}
+	private List<Product> _GetAll()
+		{
+		List<Product> list = this.RepProduct.GetAllFromProduct();
+		if (null ==  list)
+			{
+			//throw new NgTsException(NgTsErrorCode.ErrproductidInvalid, StringRes.ErrproductidInvalid(ProductId));
+			}
+		return list;
 		}
 	}
 #endregion

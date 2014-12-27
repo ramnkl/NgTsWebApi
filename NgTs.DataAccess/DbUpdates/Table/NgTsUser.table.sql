@@ -1,5 +1,5 @@
 ﻿ 
---This auto genrated code please donot alter  12/25/2014 18:54:16
+--This auto genrated code please donot alter  12/26/2014 11:01:57
 --Table Creation
 CREATE TABLE NgTsUser (
 	"UserId" int,

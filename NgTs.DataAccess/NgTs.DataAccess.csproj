@@ -146,22 +146,22 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>SimpleSample.txt</LastGenOutput>
     </None>
-    <None Include="Templates\ApiController.ttinclude" />
-    <None Include="Templates\Common.ttinclude" />
-    <None Include="Templates\CRUD.ttinclude" />
-    <None Include="Templates\DAO.ttinclude" />
-    <None Include="Templates\EzeeCRUD.tt">
+    <None Include="T4Templates\ApiController.ttinclude" />
+    <None Include="T4Templates\Common.ttinclude" />
+    <None Include="T4Templates\CRUD.ttinclude" />
+    <None Include="T4Templates\DAO.ttinclude" />
+    <None Include="T4Templates\EzeeCRUD.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>EzeeCRUD.sql</LastGenOutput>
     </None>
-    <None Include="Templates\Ezeesp.ttinclude" />
+    <None Include="T4Templates\Ezeesp.ttinclude" />
     <None Include="Model\Factory.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Factory.cs</LastGenOutput>
     </None>
-    <None Include="Templates\Factory.ttinclude" />
-    <None Include="Templates\JsonModel.ttinclude" />
-    <None Include="Templates\ReportDAO.tt">
+    <None Include="T4Templates\Factory.ttinclude" />
+    <None Include="T4Templates\JsonModel.ttinclude" />
+    <None Include="T4Templates\ReportDAO.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ReportDAO.java</LastGenOutput>
     </None>
@@ -196,24 +196,24 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SimpleSample.tt</DependentUpon>
     </Content>
-    <Content Include="Templates\EzeeCRUD.sql">
+    <Content Include="T4Templates\EzeeCRUD.sql">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>EzeeCRUD.tt</DependentUpon>
     </Content>
-    <Content Include="Templates\NgTsUser.sql">
+    <Content Include="T4Templates\NgTsUser.sql">
       <DependentUpon>EzeeCRUD.tt</DependentUpon>
     </Content>
-    <Content Include="Templates\Product.sql">
+    <Content Include="T4Templates\Product.sql">
       <DependentUpon>EzeeCRUD.tt</DependentUpon>
     </Content>
-    <Content Include="Templates\Report - Copy.xml">
+    <Content Include="T4Templates\Report - Copy.xml">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Model\Models.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Templates\ReportDAO.java">
+    <Content Include="T4Templates\ReportDAO.java">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ReportDAO.tt</DependentUpon>

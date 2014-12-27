@@ -622,7 +622,15 @@ WriteLine( string.Format( "public {0} Get{0}({1} {2})", GetLetterCase(table.name
  GetLetterCase(primaryKeyName, true)));
 PushIndent("\t");
 WriteLine("{");
-WriteLine( string.Format( "return _Get{0}({1});", GetLetterCase( GetCSharpClassType(primaryKey), false),  GetLetterCase(primaryKeyName, true)));
+WriteLine( string.Format( "return _Get{0}({1});",  GetLetterCase(table.name, false),  GetLetterCase(primaryKeyName, true)));
+WriteLine("}");
+PopIndent ();
+
+
+WriteLine( string.Format( "public List<{0}> GetAll()", GetLetterCase(table.name, false)));
+PushIndent("\t");
+WriteLine("{");
+WriteLine( "return _GetAll();");
 WriteLine("}");
 PopIndent ();
 
@@ -722,6 +730,28 @@ PopIndent ();
 WriteLine(string.Format( "return {0};", GetLetterCase(table.name, true)));
 WriteLine("}");
 PopIndent();
+
+
+WriteLine( string.Format( "private List<{0}> _GetAll()", GetLetterCase(table.name, false)));
+PushIndent("\t");
+WriteLine("{");
+WriteLine( string.Format( "List<{0}> list = this.Rep{0}.GetAllFrom{0}();", GetLetterCase(table.name, false)));
+
+ 
+WriteLine( "if (null ==  list)");
+PushIndent("\t");
+WriteLine("{");
+
+WriteLine( string.Format( "//throw new NgTsException(NgTsErrorCode.Err{0}Invalid, StringRes.Err{0}Invalid({1}));", GetLetterCase(primaryKeyName, true), GetLetterCase(primaryKeyName, false) ));
+
+WriteLine("}");
+PopIndent ();
+
+WriteLine( "return list;");
+WriteLine("}");
+PopIndent();
+
+
  
 WriteLine("}");
 PopIndent();
