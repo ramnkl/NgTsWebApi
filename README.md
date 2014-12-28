@@ -2,6 +2,10 @@ NgTsWebApi
 ==========
 Code Generation tool using T4 template for (Db objects, Persist layer, WebApi COntroller and  UI using  Angular with Typescript and also nodejs.
 
+Just Define the model in xml, generate code by running the T4template from visual studio menu, execute db scripts after created a database. Now application is ready to execute for basic CRUD operation as mentioned above pattern.
+
+There is another document which would explains detailed step to projects in your local machine.
+
 Objective 
 It is an initiation to learn the latest tools and approaches which are available in the industries using Microsoft platform.
 Initial stage, Microsoft was not focused much into the mobility platform along with them we (dotnet development team) also could not get that much exposure to move forward. 
