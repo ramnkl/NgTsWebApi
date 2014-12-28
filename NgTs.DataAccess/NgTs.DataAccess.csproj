@@ -96,18 +96,6 @@
     <Compile Include="Model\Product.GetAll.cs">
       <DependentUpon>Factory.tt</DependentUpon>
     </Compile>
-    <Compile Include="TestFolder\SimpleClass1.cs">
-      <DependentUpon>SimpleSample.txt4</DependentUpon>
-    </Compile>
-    <Compile Include="TestFolder\SimpleClass2.cs">
-      <DependentUpon>SimpleSample.txt4</DependentUpon>
-    </Compile>
-    <Compile Include="TestFolder\SimpleClass3.cs">
-      <DependentUpon>SimpleSample.txt4</DependentUpon>
-    </Compile>
-    <Compile Include="TestFolder\SimpleClass4.cs">
-      <DependentUpon>SimpleSample.txt4</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="DbUpdates\DbUpdate.bat" />
@@ -138,14 +126,6 @@
       <LastGenOutput>ElasticDemoGen.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
-    <None Include="SimpleParameterTemplate.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>SimpleParameterTemplate.txt</LastGenOutput>
-    </None>
-    <None Include="SimpleSample.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>SimpleSample.txt</LastGenOutput>
-    </None>
     <None Include="T4Templates\ApiController.ttinclude" />
     <None Include="T4Templates\Common.ttinclude" />
     <None Include="T4Templates\CRUD.ttinclude" />
@@ -165,7 +145,6 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ReportDAO.java</LastGenOutput>
     </None>
-    <None Include="TestFolder\SimpleSample.txt4" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="DbUpdates\Function\Test.sql" />
@@ -186,16 +165,6 @@
     <Content Include="DbUpdates\View\Test_vw.SQL" />
     <Content Include="ElasticDemoModel\ElasticDemoModel.xml" />
     <Content Include="ElasticDemoModel\ReadMe-ElasticObject.cs.txt" />
-    <Content Include="SimpleParameterTemplate.txt">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SimpleParameterTemplate.tt</DependentUpon>
-    </Content>
-    <Content Include="SimpleSample.txt">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SimpleSample.tt</DependentUpon>
-    </Content>
     <Content Include="T4Templates\EzeeCRUD.sql">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -218,13 +187,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ReportDAO.tt</DependentUpon>
     </Content>
-    <Content Include="TestFolder\ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="CodeTemplates\" />
     <Folder Include="DbUpdates\Error\Functions\" />
     <Folder Include="DbUpdates\Error\Indexes\" />
     <Folder Include="DbUpdates\Error\MetaData\" />
