@@ -1,0 +1,80 @@
+﻿<#@ IntelliSenseLanguage processor="tangibleT4Editor" language="C#" #>
+<#@ include file="Common.ttinclude" #>
+
+
+
+
+<#+ 
+
+private void CreateApiController(dynamic table)
+{ 
+
+dynamic  primaryKey= GetPrimaryField(table);
+string primaryKeyName = "No primary found";
+if  (primaryKey !=  null)
+primaryKeyName = (string) primaryKey.name;
+
+
+
+WriteLine("#region  controller");
+WriteLine(string.Format("public class {0}Controller : ApiController", GetLetterCase(table.name, false)));
+PushIndent("\t");
+WriteLine("{");
+WriteLine(string.Format( "static readonly {0}Manager mgr = new {0}Manager();",  GetLetterCase(table.name, false)));
+WriteLine(string.Format( "public IEnumerable<{0}> GetAll{0}()", GetLetterCase(table.name, false)));
+PushIndent("\t");
+WriteLine("{");
+WriteLine("return mgr.GetAll();");
+PopIndent();
+WriteLine("}");
+WriteLine("");
+
+WriteLine(string.Format( "public {0} Get{0}({1} id)",  GetLetterCase(table.name,false), GetCSharpClassType(primaryKey)));
+PushIndent("\t");
+WriteLine("{");
+WriteLine(string.Format( "{0} item = mgr.Get{0}(id);", GetLetterCase(table.name, false)));
+WriteLine("if (item == null)");
+PushIndent("\t");
+WriteLine("{");
+WriteLine("throw new HttpResponseException(HttpStatusCode.NotFound);");
+PopIndent();
+WriteLine("}");
+WriteLine("return item;");
+PopIndent();
+WriteLine("}");
+WriteLine("");
+
+//Post 
+WriteLine(string.Format( "public HttpResponseMessage Post{0}({0} item)", GetLetterCase(table.name,false)));
+PushIndent("\t");
+WriteLine("{");
+WriteLine(string.Format( "item = mgr.Create{0}(item);", GetLetterCase(table.name,false)));
+WriteLine(string.Format( "var response = Request.CreateResponse<{0}>(HttpStatusCode.Created, item);", GetLetterCase(table.name,false)));
+WriteLine(string.Format( "string uri = Url.Link(\"DefaultApi\", new {1} id = item.{0}{2});", GetLetterCase(primaryKeyName, false), "{", "}"));
+WriteLine("response.Headers.Location = new Uri(uri);");
+WriteLine("return response;");
+PopIndent();
+WriteLine("}");
+WriteLine("");
+
+
+//Update 
+
+WriteLine(string.Format( "public void Put{0}({1} id, {0} item)", GetLetterCase(table.name, false), GetCSharpClassType(primaryKey), GetLetterCase(table.name, true)));
+PushIndent("\t");
+WriteLine("{");
+WriteLine(string.Format( "item.{1} = id;", GetLetterCase(table.name,true), GetLetterCase(primaryKeyName,false)));
+WriteLine(string.Format("mgr.Update{0}(item);", GetLetterCase(table.name, false)));
+PopIndent();
+		//throw new HttpResponseException(HttpStatusCode.NotFound);
+WriteLine("}");
+WriteLine("");
+
+//end of class 
+PopIndent();
+WriteLine("}");
+
+WriteLine("#endregion");
+
+}
+#>
