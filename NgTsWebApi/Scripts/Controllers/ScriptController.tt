@@ -1,0 +1,20 @@
+﻿<#@ template debug="true" hostspecific="true" language="C#" #>
+<#@ include file="..\..\..\NgTs.DataAccess\T4Templates\TypescriptController.ttinclude" #><#@ output extension=".cs" #>
+
+<#
+
+var manager = TemplateFileManager.Create(this);
+var model=FromFile(@"..\..\..\NgTs.DataAccess\Model\models.xml");
+foreach(var c in model["table"]) 
+	{ //get all classes	
+	manager.StartNewFile(GetLetterCase( c.name, false) +"Controller.ts");
+
+#>
+ 
+// This auto genrated code please donot alter  <#=  DateTime.Now #>
+<#
+	
+	 CreateTSController ( c);
+    }
+	manager.Process();
+#>

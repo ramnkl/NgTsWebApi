@@ -105,6 +105,8 @@ return retType;
 }
 	
 
+
+
 private string GetDbDataType(dynamic field)
 {
 	if (field ==  null)
@@ -127,6 +129,23 @@ private string GetDbDataType(dynamic field)
 
 	return  retType;
 }
+
+private string GetTypeScriptType(dynamic field)
+{
+	if (field ==  null)
+		return "missing Att";
+	string type  ="";
+	if (field.type !=  null)
+	 type  = field.type;
+	string retType ="string";
+
+	if (type.StartsWith("int") ==true || type.StartsWith("tiny")==true ||type.StartsWith("decimal")==true||type.StartsWith("decimal")==true )
+		retType = "number";
+	else if (type.StartsWith ("date")==true)
+		retType  = "dateTime";
+return retType;
+}
+
 
 private string GetReaderMethod(dynamic field)
 {

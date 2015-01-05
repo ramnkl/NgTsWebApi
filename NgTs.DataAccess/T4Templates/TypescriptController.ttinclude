@@ -1,0 +1,28 @@
+﻿<#@ IntelliSenseLanguage processor="tangibleT4Editor" language="C#" #>
+<#@ include file="Common.ttinclude" #>
+<#+ 
+
+private void CreateTSController(dynamic table)
+{ 
+
+dynamic  primaryKey= GetPrimaryField(table);
+string primaryKeyName = "No primary found";
+if  (primaryKey !=  null)
+primaryKeyName = (string) primaryKey.name;
+
+WriteLine(string.Format("module {0}Module {1}", GetLetterCase(table.name, false), "{"));
+	PushIndent("\t");
+	WriteLine("export interface Scope {" );
+	PushIndent("\t");
+foreach  (dynamic field in table["field"])
+{
+WriteLine( string.Format(  "{0}: {1};"  , field.name, GetTypeScriptType(field) ));
+}		//throw new HttpResponseException(HttpStatusCode.NotFound);
+PopIndent();
+
+WriteLine("}");
+PopIndent();
+
+WriteLine("}");
+}
+#>
